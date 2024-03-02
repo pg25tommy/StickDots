@@ -42,5 +42,6 @@
     "url": "https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git",
     "type": "git",
     "revision": "884fc6c024ed2ac79c1402861cfa70b639818a1f"
-  }
+  },
+  "_fingerprint": "c0558d0a8a2b5e25820ee2fecb0b61fff9905f32"
 }
