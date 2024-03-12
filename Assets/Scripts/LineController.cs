@@ -5,9 +5,10 @@ using UnityEngine;
 public class LineController : MonoBehaviour
 {
     private LineRenderer lr;
-    private bool isMouseClicked = false;
+    private bool isDragging = false;
     public List<Transform> points = new List<Transform>();
     public Transform lastPoints;
+
     public Color validColor = Color.green;
     public Color invalidColor = Color.red;
 
@@ -17,25 +18,26 @@ public class LineController : MonoBehaviour
         lr.enabled = false;
     }
 
-    private void MakeLine(Transform finalPoint)
+    // Function to add a point to the line
+    private void MakeLine(Transform point)
     {
-        if (lastPoints == null)
-        {
-            lastPoints = finalPoint;
-            points.Add(lastPoints);
-        }
-        else
-        {
-            points.Add(finalPoint);
-            lr.enabled = true;
-            SetupLine();
-        }
+        // Add the new point to the list of points
+        points.Add(point);
+
+        // Enable the LineRenderer and update the line positions
+        lr.enabled = true;
+        SetupLine();
     }
 
+    // Function to update the line positions based on the points
     private void SetupLine()
     {
         int pointLength = points.Count;
+
+        // Set the number of positions in the LineRenderer to match the number of points
         lr.positionCount = pointLength;
+
+        // Update the positions of the line to match the points
         for (int i = 0; i < pointLength; i++)
         {
             lr.SetPosition(i, points[i].position);
@@ -44,10 +46,29 @@ public class LineController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && !isMouseClicked)
+        // Check for mouse button down to start dragging
+        if (Input.GetMouseButtonDown(0))
         {
-            isMouseClicked = true;
+            isDragging = true;
 
+            // Cast a ray from the mouse position to interact with objects
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            // Check if the ray hits an object with the "dot" tag
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.collider != null && hit.collider.CompareTag("dot"))
+                {
+                    // Start or continue the line with the hit point
+                    MakeLine(hit.collider.transform);
+                }
+            }
+        }
+
+        // Check for mouse button held down to continue dragging
+        if (isDragging && Input.GetMouseButton(0))
+        {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -55,18 +76,20 @@ public class LineController : MonoBehaviour
             {
                 if (hit.collider != null && hit.collider.CompareTag("dot"))
                 {
+                    // Continue the line with the hit point
                     MakeLine(hit.collider.transform);
-                    Debug.Log(hit.collider.name);
                 }
             }
         }
 
+        // Check for mouse button release to stop dragging
         if (Input.GetMouseButtonUp(0))
         {
-            isMouseClicked = false;
+            isDragging = false;
         }
     }
 
+    // Animation 
     public void StartLineAnimation()
     {
         StartCoroutine(AnimateLine());
