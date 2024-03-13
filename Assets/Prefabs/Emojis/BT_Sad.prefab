@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8298502845896825600}
   - component: {fileID: 9181326465343703739}
   - component: {fileID: 2854744052173926143}
+  - component: {fileID: 7913025898137080741}
   m_Layer: 5
   m_Name: BT_Sad
   m_TagString: Untagged
@@ -147,3 +148,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emojiPrefab: {fileID: 1622674646756418327, guid: 143ee198bd3c03a43b4bd5e43aa4a5f7, type: 3}
   emojiAnimation: sad
+  spawnTransform: {fileID: 0}
+--- !u!95 &7913025898137080741
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8797594734609554880}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2bf62b8d1cc2a094d96ba371f713caef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
