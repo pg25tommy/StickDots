@@ -65,7 +65,7 @@ public class Board
             for (int j = 0; j < width - 1; j++)
             {
                 boxes[i][j] = new Box(new Vector2(i, j));
-                boxes[i][j].AddLinesToSet(availableLines);
+                AddAllLinesOfBoxToAvailableSet(boxes[i][j]);
             }
         }
         return boxes;
@@ -83,6 +83,14 @@ public class Board
             }
         }
         return boxes;
+    }
+
+    public void AddAllLinesOfBoxToAvailableSet(Box box)
+    {
+        foreach (Line line in box.lines)
+        {
+            availableLines.Add(line.lineCoords);
+        }
     }
 
     public int MakeMove(
@@ -130,6 +138,9 @@ public class Board
         int firstDotCol = (int)lineToConnect.Item1.y;
 
         bool isHorizontal = IsHorizontalLine(lineToConnect);
+
+        // Iterate column if line is vertical
+        // iterate row if line is horizontal
         int varToChange = (isHorizontal ? firstDotRow : firstDotCol);
         int index = 0;
         for (int i = varToChange; i >= varToChange - 1; i--)
@@ -140,10 +151,12 @@ public class Board
                 !isHorizontal && i >= width - 1)
                 continue;
 
+            // Check left and right boxes if line is vertical
+            // top and bottom boxes if line is horizontal
             Box box = isHorizontal ? boxes[i][firstDotCol] : boxes[firstDotRow][i];
 
             if (toConnect)
-                box.ConnectDots(lineToConnect, turnIndex);
+                box.ConnectDots(lineToConnect);
 
             numConnectionsEachBox[index] = box.numConnectedLines;
 
@@ -158,12 +171,12 @@ public class Board
 
     public void AddLastLineToList(Box box)
     {
-        foreach (KeyValuePair<Tuple<Vector2, Vector2>, bool> entry in
-            box.lineConnectedDict)
+        // box already has 3 connected lines, get the one that is not connected
+        foreach (Line line in box.lines)
         {
             // Add to list if the line is not connected
-            if (!entry.Value)
-                lastLineForBoxesWithThreeConnections.Enqueue(entry.Key);
+            if (!line.connected)
+                lastLineForBoxesWithThreeConnections.Enqueue(line.lineCoords);
         }
     }
 

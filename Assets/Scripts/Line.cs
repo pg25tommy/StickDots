@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public struct Line
+public class Line
 {
     public Tuple<Vector2, Vector2> lineCoords;
     public bool connected;
@@ -12,5 +12,11 @@ public struct Line
     {
         lineCoords = Tuple.Create(p1, p2);
         connected = false;
+    }
+
+    public Line(Line otherLine)
+    {
+        lineCoords = otherLine.lineCoords;
+        connected = otherLine.connected;
     }
 }
