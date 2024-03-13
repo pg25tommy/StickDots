@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Dot
+public struct Dot
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Vector2 dotCoord;
+    public List<Vector2> neighbours;
 
-    // Update is called once per frame
-    void Update()
+    public Dot(int row, int col)
     {
-        
+        dotCoord = new Vector2(row, col);
+        neighbours = new List<Vector2>();
+
     }
 }

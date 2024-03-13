@@ -21,7 +21,7 @@ public class Board
     public HashSet<Tuple<Vector2, Vector2>> connectedLines =
         new HashSet<Tuple<Vector2, Vector2>>();
 
-    // All boxes where
+    // All boxes where 3 lines are already connected
     public Queue<Tuple<Vector2, Vector2>> lastLineForBoxesWithThreeConnections =
         new Queue<Tuple<Vector2, Vector2>>();
 
@@ -44,11 +44,9 @@ public class Board
         boxes = InitializeBoxes(originalBoardState.boxes);
 
         // Shallow copy of the hashsets
-        availableLines =
-            new HashSet<Tuple<Vector2, Vector2>>
+        availableLines = new HashSet<Tuple<Vector2, Vector2>>
             (originalBoardState.availableLines);
-        connectedLines =
-            new HashSet<Tuple<Vector2, Vector2>>
+        connectedLines = new HashSet<Tuple<Vector2, Vector2>>
             (originalBoardState.connectedLines);
 
         // Shallow copy

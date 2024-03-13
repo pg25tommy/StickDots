@@ -17,6 +17,8 @@ public class MinMax
         float bestScore;
         Tuple<Vector2, Vector2> bestLine = null;
 
+        // Base case when a leaf node is reached
+        // return the AI score - human score
         if (currentDepth == 0 ||
             currentBoardState.availableLines.Count == 0)
         {
@@ -26,6 +28,10 @@ public class MinMax
                 bestLine);
         }
 
+        // Depends on whos turn, initialize best score
+        // Since we want to get max when AI's turn,
+        // initialize bestscore to negative large number
+        // and vice versa
         if (currentTurnIndex == AITurnIndex)
             bestScore = -100000;
 
