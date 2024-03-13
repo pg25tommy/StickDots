@@ -1,0 +1,85 @@
+{
+    "name": "PlayerInputs",
+    "maps": [
+        {
+            "name": "CameraMovement",
+            "id": "e56cb1d9-21d4-4680-a317-36e1e758aa43",
+            "actions": [
+                {
+                    "name": "Drag",
+                    "type": "Button",
+                    "id": "20a0e43e-db39-4c08-a435-4dbd1403ff00",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PrimaryFingerPosition",
+                    "type": "PassThrough",
+                    "id": "f33d0572-05be-4c9e-9d06-5d8b3e8f2336",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SecondaryFingerPosition",
+                    "type": "Button",
+                    "id": "2b0079de-9e04-4c67-b68d-8116eda76b48",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "45054228-9633-47c2-b078-c529a2abc2e4",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4b64123-aecd-4ff9-9d4a-a149bf050c53",
+                    "path": "<Touchscreen>/Press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drag",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c0e01640-b284-4327-a0ed-3d465170d93f",
+                    "path": "<Mouse>/scroll/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PrimaryFingerPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "dcdb8be4-5fb8-42c8-95ae-7f1c4783f647",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SecondaryFingerPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
