@@ -14,14 +14,77 @@ public class CameraController : MonoBehaviour
     //Reference of the camera
     private Camera _mainCamera;
 
+    private Coroutine _zoomCoroutine;
+
+    [SerializeField] private float _cameraSpeed = 4f;
+
     //Check to see if the user is dragging the camera around
     private bool _isDragging;
+
+    //Player Touch Inputs 
+    private PlayerInputs _controls;
 
     //Awake method to initialize the camera
     private void Awake()
     {
         _mainCamera = Camera.main;
+        _controls = new PlayerInputs();
     }
+
+    //Function that enables touch controls
+    private void OnEnable()
+    {
+        _controls.Enable();
+    }
+
+    //Function that disable touch controls
+    private void OnDisable()
+    {
+        _controls.Disable();
+    }
+
+    //Start function where we detect the touch controls
+    private void Start()
+    {
+        _controls.CameraMovement.SecondaryTouchContact.started += _ => ZoomStart();
+        _controls.CameraMovement.SecondaryTouchContact.canceled += _ => ZoomEnd();
+        _controls.CameraMovement.PrimaryTouchContact.canceled += _ => ZoomEnd();
+    }
+
+    private void ZoomStart()
+    {
+        _zoomCoroutine = StartCoroutine(ZoomDetection());
+    } 
+    
+    private void ZoomEnd()
+    {
+        StopCoroutine(_zoomCoroutine);
+    }
+    
+    IEnumerator ZoomDetection()
+    {
+        float previousDistance = 0, distance = 0f;
+
+        while (true)
+        {
+            distance = Vector2.Distance(_controls.CameraMovement.PrimaryFingerPosition.ReadValue<Vector2>(), _controls.CameraMovement.SecondaryFingerPosition.ReadValue<Vector2>());
+
+            if (distance > previousDistance && _mainCamera.orthographicSize > 2.0f)
+            {
+                _mainCamera.orthographicSize -= Time.deltaTime * _cameraSpeed;
+            }
+
+            else if(distance < previousDistance && _mainCamera.orthographicSize < 10.0f)
+            {
+                _mainCamera.orthographicSize += Time.deltaTime * _cameraSpeed;
+            }
+
+            previousDistance = distance;
+            yield return null;
+        }
+    }
+
+
 
     //Method that drags the camera around the scene
     public void OnDrag(InputAction.CallbackContext ctx)
