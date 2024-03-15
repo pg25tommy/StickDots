@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GridGenerator : MonoBehaviour
 {
+    public static GridGenerator Instance;
     [SerializeField] GameObject _drawPoint;
     [SerializeField] int _gridSize;
     private int _gridX;
@@ -17,6 +18,14 @@ public class GridGenerator : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
         _mainCamera = FindFirstObjectByType<Camera>();
     }
     // Start is called before the first frame update
@@ -25,27 +34,29 @@ public class GridGenerator : MonoBehaviour
         _gridX = _gridSize;
         _gridY = _gridSize;
 
-        GenerateGrid();
+        //GenerateGrid();
 
-        SetCamera();
+        //SetCamera();
     }
 
-    void GenerateGrid()
+    public void GenerateGrid()
     {
-        for (int x = 0; x < _gridX; x++)
+        for (int row = 0; row < _gridX; row++)
         {
-            for (int y = 0; y < _gridY; y++)
+            for (int col = 0; col < _gridY; col++)
             {
-                Vector3 spawnLocation = new Vector3(x * _distance, y * _distance, 0f) + _gridOrigin;
+                Vector3 spawnLocation = new Vector3(col * _distance, row * _distance, 0f) + _gridOrigin;
                 GameObject instance = Instantiate(_drawPoint, spawnLocation, Quaternion.identity);
-               _gridPoints.Add(instance);
+                Dot dot = instance.GetComponent<Dot>();
+                dot.dotCoord = new Vector2(col, row);
+                _gridPoints.Add(instance);
             }
         }
 
         _topRightPoint = _gridPoints[_gridPoints.Count - 1].transform.position;
     }
 
-    void SetCamera()
+    public void SetCamera()
     {
         _mainCamera.transform.position = Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f);
         _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, -5f);
