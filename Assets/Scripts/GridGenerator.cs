@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,14 @@ public class GridGenerator : MonoBehaviour
     private int _gridY;
     [SerializeField] float _distance;
     [SerializeField] Vector3 _gridOrigin = Vector3.zero;
+    [SerializeField] Vector3 _topRightPoint;
+    private List<GameObject> _gridPoints = new List<GameObject>();
+    private Camera _mainCamera;
+
+    private void Awake()
+    {
+        _mainCamera = FindFirstObjectByType<Camera>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +26,8 @@ public class GridGenerator : MonoBehaviour
         _gridY = _gridSize;
 
         GenerateGrid();
+
+        SetCamera();
     }
 
     void GenerateGrid()
@@ -26,8 +37,19 @@ public class GridGenerator : MonoBehaviour
             for (int y = 0; y < _gridY; y++)
             {
                 Vector3 spawnLocation = new Vector3(x * _distance, y * _distance, 0f) + _gridOrigin;
-                Instantiate(_drawPoint, spawnLocation, Quaternion.identity);
+                GameObject instance = Instantiate(_drawPoint, spawnLocation, Quaternion.identity);
+               _gridPoints.Add(instance);
             }
         }
+
+        _topRightPoint = _gridPoints[_gridPoints.Count - 1].transform.position;
+    }
+
+    void SetCamera()
+    {
+        _mainCamera.transform.position = Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f);
+        _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, -5f);
+        _mainCamera.orthographicSize = _gridSize / _mainCamera.aspect;
     }
 }
+
