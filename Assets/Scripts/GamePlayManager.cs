@@ -7,7 +7,7 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] PlayerData[] playerDatas;
     [SerializeField] GameObject playerPrefab;
     [HideInInspector] public Player[] players;
-    public int currentPlayerIndex = 0;
+    public int currentPlayerIndex { get; private set; } = 0;
     public static GamePlayManager Instance { get; private set; }
     private int playerCount = 5;
 
