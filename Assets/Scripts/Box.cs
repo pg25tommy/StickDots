@@ -16,28 +16,28 @@ public class Box
 
     public Box(Vector2 coordUppderLeft)
     {
-
-        // Always declare line from top dot to bottom dot,
-        // left dot to right dot
-
-        // upper left to lower left
+        // lower left to lower right
         lines.Add(new Line(
             new Vector2(coordUppderLeft.x, coordUppderLeft.y), 
             new Vector2(coordUppderLeft.x + 1, coordUppderLeft.y)));
-        // upper left to upper right
+
+        // lower left to upper left
         lines.Add(new Line(
             new Vector2(coordUppderLeft.x, coordUppderLeft.y),
             new Vector2(coordUppderLeft.x, coordUppderLeft.y + 1)));
-        // upper right to lower right
+
+        // upper left to upper right
         lines.Add(new Line(
             new Vector2(coordUppderLeft.x, coordUppderLeft.y + 1),
             new Vector2(coordUppderLeft.x + 1, coordUppderLeft.y + 1)));
-        // lower left to lower right
+
+        // lower right to upper right
         lines.Add(new Line(
             new Vector2(coordUppderLeft.x + 1, coordUppderLeft.y),
             new Vector2(coordUppderLeft.x + 1, coordUppderLeft.y + 1)));
     }
 
+    // Copy constructor of Box
     public Box(Box otherBox)
     {
         
@@ -52,19 +52,16 @@ public class Box
         numConnectedLines = otherBox.numConnectedLines;
     }
 
-    //public void ConnectDots(Line lineToConnect)
-    //{
-    //    lineToConnect.connected = true;
-    //    numConnectedLines += 1;
-    //}
-
     public void ConnectDots(Tuple<Vector2, Vector2> lineToConnect)
     {
         foreach (Line line in lines)
         {
-            if (line.lineCoords == lineToConnect)
+            if (line.lineCoords.Item1 == lineToConnect.Item1 &&
+                line.lineCoords.Item2 == lineToConnect.Item2)
             {
                 line.connected = true;
+                numConnectedLines++;
+                return;
             }
         }
     }

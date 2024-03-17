@@ -46,7 +46,7 @@ public class MinMax
             //// Use copy constructor to create a new board for
             //// minmax score calculation
             Board nextBoardState = new Board(currentBoardState);
-            int nextTurnIndex = nextBoardState.MakeMove(line, currentTurnIndex);
+            int nextTurnIndex = nextBoardState.MakeMove(line, currentTurnIndex, false);
 
             (float nextMoveScore, var _) = getScore(
                 nextBoardState,
@@ -83,6 +83,8 @@ public class MinMax
                 break;
         }
 
+        // Reach here after evaluating all leaf nodes of 
+        // a root node
         return (bestScore, bestLine);
     }
 }

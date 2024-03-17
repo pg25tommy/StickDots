@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int nextTurnIndex = 0;
     public int numOfLinesTotal;
     public System.Random randomizer = new System.Random();
+    public UnityEvent<Vector3> BoxCapturedEvent;
 
     private void Awake()
     {
@@ -33,18 +35,12 @@ public class GameManager : MonoBehaviour
     {
         board = new Board(h, w);
         numOfLinesTotal = h * (w - 1) + w * (h - 1);
-        GridGenerator.Instance.GenerateGrid();
 
-        GridGenerator.Instance.SetCamera();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (nextTurnIndex == playersTurn)
-        //{
-        //    PlayersMove();
-        //}
         if (nextTurnIndex == AIsTurn)
         {
             AIsMove();
@@ -56,16 +52,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void CaptureBox(Vector3 boxCoordAndCapturedBy)
+    {
+        BoxCapturedEvent.Invoke(boxCoordAndCapturedBy);
+    }
+
     public void PlayersMove(Vector2 p1, Vector2 p2)
     {
-        var lineToConnect = Tuple.Create(p1, p2);
-        nextTurnIndex = board.MakeMove(lineToConnect, playersTurn);
+        Tuple<Vector2, Vector2> lineToConnect;
+        // If Vertical
+        if (p1.x == p2.x)
+        {
+            lineToConnect = p1.y > p2.y ? 
+                Tuple.Create(p2, p1) : Tuple.Create(p1, p2);
+        }
+        else
+        {
+            lineToConnect = p1.x > p2.x ? 
+                Tuple.Create(p2, p1) : Tuple.Create(p1, p2);
+        }
+        nextTurnIndex = board.MakeMove(lineToConnect, playersTurn, true);
     }
 
     public void AIsMove()
     {
-        //Console.WriteLine("AI's TURN");
-
         Tuple<Vector2, Vector2> chosenLine = null;
         if (board.availableLines.Count >= (int)numOfLinesTotal / 2)
         {
@@ -84,11 +94,12 @@ public class GameManager : MonoBehaviour
 
                     // Check connections but don't connect the lines yet
                     int[] numConnections = board.CheckBothBoxConnections(
-                        false, AIsTurn, randomLine);
+                        false, AIsTurn, randomLine, false);
 
                     if (numConnections[0] < 2 && numConnections[1] < 2)
                     {
                         chosenLine = randomLine;
+                        break;
                     }
                 }
             }
@@ -98,8 +109,8 @@ public class GameManager : MonoBehaviour
         {
             (_, chosenLine) = MinMax.getScore(board, 10, -100000, 100000, AIsTurn);
         }
-        nextTurnIndex = board.MakeMove(chosenLine, AIsTurn);
-        Debug.Log("AIMOVING");
+        nextTurnIndex = board.MakeMove(chosenLine, AIsTurn, true);
+        Debug.Log($"AI: {chosenLine}");
         LineController.Instance.MakeLine(chosenLine.Item1, chosenLine.Item2);
 
     }

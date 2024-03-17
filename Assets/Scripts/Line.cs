@@ -14,6 +14,7 @@ public class Line
         connected = false;
     }
 
+    // Copy constructor of Line
     public Line(Line otherLine)
     {
         lineCoords = otherLine.lineCoords;

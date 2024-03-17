@@ -29,7 +29,7 @@ public class Board
     {
         height = h;
         width = w;
-        boxes = new Box[height - 1][];
+        boxes = new Box[width - 1][];
         InitializeBoxes();
     }
 
@@ -40,16 +40,16 @@ public class Board
         height = originalBoardState.height;
         width = originalBoardState.width;
         score = new[] { originalBoardState.score[0], originalBoardState.score[1] };
-        boxes = new Box[height - 1][];
+        boxes = new Box[width - 1][];
         boxes = InitializeBoxes(originalBoardState.boxes);
 
-        // Shallow copy of the hashsets
+        // Deep copy of the hashsets
         availableLines = new HashSet<Tuple<Vector2, Vector2>>
             (originalBoardState.availableLines);
         connectedLines = new HashSet<Tuple<Vector2, Vector2>>
             (originalBoardState.connectedLines);
 
-        // Shallow copy
+        // Deep copy of boxes w/ 3 lines connected
         lastLineForBoxesWithThreeConnections.Clear();
         foreach (var line in originalBoardState.lastLineForBoxesWithThreeConnections)
         {
@@ -59,11 +59,12 @@ public class Board
 
     public Box[][] InitializeBoxes()
     {
-        for (int i = 0; i < height - 1; i++)
+        for (int i = 0; i < width - 1; i++)
         {
-            boxes[i] = new Box[width - 1];
-            for (int j = 0; j < width - 1; j++)
+            boxes[i] = new Box[height - 1];
+            for (int j = 0; j < height - 1; j++)
             {
+                // Use lower left dot coordinate as box coordinate
                 boxes[i][j] = new Box(new Vector2(i, j));
                 AddAllLinesOfBoxToAvailableSet(boxes[i][j]);
             }
@@ -73,10 +74,10 @@ public class Board
 
     public Box[][] InitializeBoxes(Box[][] originalBoxes)
     {
-        for (int i = 0; i < height - 1; i++)
+        for (int i = 0; i < width - 1; i++)
         {
-            boxes[i] = new Box[width - 1];
-            for (int j = 0; j < width - 1; j++)
+            boxes[i] = new Box[height - 1];
+            for (int j = 0; j < height - 1; j++)
             {
                 // Use copy constructor of box
                 boxes[i][j] = new Box(originalBoxes[i][j]);
@@ -97,7 +98,8 @@ public class Board
         // NOTE: Always declare line from top dot to bottom dot,
         // left dot to right dot
         Tuple<Vector2, Vector2> lineToConnect,
-        int turnIndex)
+        int turnIndex,
+        bool playCaptureAnimIfCaptured)
     {
         if (connectedLines.Contains(lineToConnect))
             return -1;
@@ -107,7 +109,8 @@ public class Board
 
         // Connect the line and get the number of connected line for each box
         // Note: 1 move will affect 2 boxes
-        int[] numConnectedLines = CheckBothBoxConnections(true, turnIndex, lineToConnect);
+        int[] numConnectedLines = CheckBothBoxConnections(
+            true, turnIndex, lineToConnect, playCaptureAnimIfCaptured);
 
         bool captured = CheckIfEitherBoxCaptured(numConnectedLines);
 
@@ -131,17 +134,17 @@ public class Board
     }
 
     public int[] CheckBothBoxConnections(bool toConnect, int turnIndex,
-        Tuple<Vector2, Vector2> lineToConnect)
+        Tuple<Vector2, Vector2> lineToConnect, bool playCaptureAnimIfCaptured)
     {
         int[] numConnectionsEachBox = new int[2];
-        int firstDotRow = (int)lineToConnect.Item1.x;
-        int firstDotCol = (int)lineToConnect.Item1.y;
+        int firstDotX = (int)lineToConnect.Item1.x;
+        int firstDotY = (int)lineToConnect.Item1.y;
 
         bool isHorizontal = IsHorizontalLine(lineToConnect);
 
-        // Iterate column if line is vertical
-        // iterate row if line is horizontal
-        int varToChange = (isHorizontal ? firstDotRow : firstDotCol);
+        // Iterate x (i.e. left & right boxes that share line) if line is vertical
+        // iterate y (i.e. top & bottom boxesthat share line) if line is horizontal
+        int varToChange = (isHorizontal ? firstDotY : firstDotX);
         int index = 0;
         for (int i = varToChange; i >= varToChange - 1; i--)
         {
@@ -153,7 +156,11 @@ public class Board
 
             // Check left and right boxes if line is vertical
             // top and bottom boxes if line is horizontal
-            Box box = isHorizontal ? boxes[i][firstDotCol] : boxes[firstDotRow][i];
+            Box box = isHorizontal ? boxes[firstDotX][i] : boxes[i][firstDotY];
+
+                
+            //string debug = isHorizontal ? $"{firstDotX}, {i}" : $"{i}, {firstDotY}";
+            //Debug.Log(debug);
 
             if (toConnect)
                 box.ConnectDots(lineToConnect);
@@ -161,7 +168,20 @@ public class Board
             numConnectionsEachBox[index] = box.numConnectedLines;
 
             if (box.numConnectedLines == 3)
-                AddLastLineToList(box);
+                AddLastLineToQueue(box);
+
+            // If capture box this round
+            else if (
+                playCaptureAnimIfCaptured &&
+                box.numConnectedLines == 4 && 
+                box.capturedBy == -1)
+            {
+                box.capturedBy = turnIndex;
+                Vector3 boxCoordAndCapturedBy = isHorizontal ?
+                    new Vector3(firstDotX, i, turnIndex) :
+                    new Vector3(i, firstDotY, turnIndex);
+                GameManager.Instance.CaptureBox(boxCoordAndCapturedBy);
+            }
 
             index++;
         }
@@ -169,7 +189,7 @@ public class Board
         return numConnectionsEachBox;
     }
 
-    public void AddLastLineToList(Box box)
+    public void AddLastLineToQueue(Box box)
     {
         // box already has 3 connected lines, get the one that is not connected
         foreach (Line line in box.lines)
@@ -182,10 +202,10 @@ public class Board
 
     public bool IsHorizontalLine(Tuple<Vector2, Vector2> line)
     {
-        // If the row index of first dot equals to the 
-        // row index of the second dot, then horizontal line
+        // If the x coord of first dot equals to  
+        // x coord of the second dot, then vertical line
         if (line.Item1.x == line.Item2.x)
-            return true;
-        return false;
+            return false;
+        return true;
     }
 }

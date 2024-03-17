@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.qhenshaw.gameevents": {
+      "version": "https://github.com/qhenshaw/GameEvents.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ceaeaded7a244421c9e56aaa41d3c0b5f615206b"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,

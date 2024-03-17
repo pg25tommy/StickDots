@@ -5,13 +5,14 @@ using UnityEngine;
 public class LineController : MonoBehaviour
 {
     public static LineController Instance;
+    public Transform lineParent;
     public Vector3[] dotPositions = new Vector3[2];
     public Vector2 p1;
     public Vector2 p2;
     public LineRenderer lineRendererPrefab;
 
-    public Color validColor = Color.green;
-    public Color invalidColor = Color.red;
+    //public Color validColor = Color.green;
+    //public Color invalidColor = Color.red;
     public bool newLine = false;
 
     private void Awake()
@@ -64,8 +65,9 @@ public class LineController : MonoBehaviour
 
         if (newLine)
         {
-            LineRenderer lineRenderer = Instantiate(lineRendererPrefab);
+            LineRenderer lineRenderer = Instantiate(lineRendererPrefab, lineParent);
             lineRenderer.SetPositions(dotPositions);
+            Debug.Log($"Human: {p1}, {p2}");
             GameManager.Instance.PlayersMove(p1, p2);
             newLine = false;
         }
@@ -73,7 +75,7 @@ public class LineController : MonoBehaviour
 
     public void MakeLine(Vector2 p1, Vector2 p2)
     {
-        LineRenderer lineRenderer = Instantiate(lineRendererPrefab);
+        LineRenderer lineRenderer = Instantiate(lineRendererPrefab, lineParent);
         Vector3[] dotsToConnect = new Vector3[2];
         dotsToConnect[0] = p1;
         dotsToConnect[1] = p2;
