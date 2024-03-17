@@ -5,7 +5,7 @@ using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.Events;
 
-enum Player
+enum PlayerColour
 {
     player_blue,
     player_red
@@ -21,7 +21,7 @@ public class BoxComplete : MonoBehaviour
 
 
     private int col;
-    private Player winPlayer;
+    private PlayerColour winPlayer;
     //[SerializeField] Player winPlayer;
     //[SerializeField] int col;
     //[SerializeField] int x, y;
@@ -68,15 +68,15 @@ public class BoxComplete : MonoBehaviour
     {
         int x = (int)boxCoordAndCapturedBy.x;
         int y = (int)boxCoordAndCapturedBy .y;
-        winPlayer = (Player)boxCoordAndCapturedBy.z;
+        winPlayer = (PlayerColour)boxCoordAndCapturedBy.z;
         //get the specific gameobject render by hash code
         Renderer ren = boxes[getBoxHash(x, y)].gameObject.GetComponent<Renderer>();
         //set
-        if (winPlayer == Player.player_blue)
+        if (winPlayer == PlayerColour.player_blue)
         {
             activeColor = blueColor;
         }
-        else if (winPlayer == Player.player_red)
+        else if (winPlayer == PlayerColour.player_red)
         {
             activeColor = redColor;
         }
