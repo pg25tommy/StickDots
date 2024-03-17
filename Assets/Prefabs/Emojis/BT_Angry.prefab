@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5694396171130886040}
   - component: {fileID: 4767877482396595442}
   - component: {fileID: 7913368434673766815}
+  - component: {fileID: 8101375261318974291}
   m_Layer: 5
   m_Name: BT_Angry
   m_TagString: Untagged
@@ -69,7 +70,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 19b33534ec328dc44800fbf695dfe367, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -147,3 +148,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emojiPrefab: {fileID: 8802648617147876942, guid: 21d23772ac20c0c48997ef6599f1dfd3, type: 3}
   emojiAnimation: angry
+  spawnTransform: {fileID: 0}
+--- !u!95 &8101375261318974291
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9021758838866205020}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2bf62b8d1cc2a094d96ba371f713caef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
