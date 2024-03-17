@@ -5,7 +5,7 @@ using UnityEngine;
 public class LineController : MonoBehaviour
 {
     public static LineController Instance;
-    public Transform lineParent;
+    private GameObject lineParent;
     public Vector3[] dotPositions = new Vector3[2];
     public Vector2 p1;
     public Vector2 p2;
@@ -25,6 +25,11 @@ public class LineController : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        lineParent = new GameObject("LineDrawings");
     }
 
     void Update()
@@ -49,23 +54,27 @@ public class LineController : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-
+            newLine = false;
             // Check if the ray hits an object with the "dot" tag
             if (Physics.Raycast(ray, out hit))
             {
+                // if raycast hit dot and 
                 if (hit.collider != null && hit.collider.CompareTag("dot"))
                 {
                     dotPositions[1] = hit.collider.transform.position;
                     p2 = hit.collider.transform.GetComponent<Dot>().dotCoord;
+                    if (p1.y == p2.y && Mathf.Abs(p1.x - p2.x) == 1 ||
+                        p1.x == p2.x && Mathf.Abs(p1.y - p2.y) == 1)
+                    {
+                        newLine = true;
+                    }
                 }
             }
-
-            newLine = true;
         }
 
         if (newLine)
         {
-            LineRenderer lineRenderer = Instantiate(lineRendererPrefab, lineParent);
+            LineRenderer lineRenderer = Instantiate(lineRendererPrefab, lineParent.transform);
             lineRenderer.SetPositions(dotPositions);
             Debug.Log($"Human: {p1}, {p2}");
             GameManager.Instance.PlayersMove(p1, p2);
@@ -75,7 +84,7 @@ public class LineController : MonoBehaviour
 
     public void MakeLine(Vector2 p1, Vector2 p2)
     {
-        LineRenderer lineRenderer = Instantiate(lineRendererPrefab, lineParent);
+        LineRenderer lineRenderer = Instantiate(lineRendererPrefab, lineParent.transform);
         Vector3[] dotsToConnect = new Vector3[2];
         dotsToConnect[0] = p1;
         dotsToConnect[1] = p2;

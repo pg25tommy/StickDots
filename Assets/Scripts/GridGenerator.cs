@@ -58,8 +58,8 @@ public class GridGenerator : MonoBehaviour
             for (int y = 0; y < _gridY; y++)
             {
                 Vector3 spawnLocation = new Vector3(
-                    y * _distance, 
                     x * _distance, 
+                    y * _distance, 
                     0f) + _gridOrigin;
 
                 GameObject instance = Instantiate(
@@ -69,7 +69,7 @@ public class GridGenerator : MonoBehaviour
                     Dots.transform);
 
                 Dot dot = instance.GetComponent<Dot>();
-                dot.dotCoord = new Vector2(y, x);
+                dot.dotCoord = new Vector2(x, y);
                 _gridPoints.Add(instance);
             }
         }
