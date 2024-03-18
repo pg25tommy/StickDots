@@ -32,7 +32,8 @@ public class BoxComplete : MonoBehaviour
         // Width in GameManager stores num of dots
         // For box need to -1
         col = GameManager.Instance.w - 1;
-        blingMode = true;
+        blingMode = false;
+        ResetBling();
     }
 
     int getBoxHash(int x, int y)
@@ -81,25 +82,33 @@ public class BoxComplete : MonoBehaviour
             activeColor = redColor;
         }
 
+        ren.gameObject.SetActive(true);
         ren.material = activeColor;
+        blingMode = true;
     }
 
     private void ResetBling()
     {
         blingMode = false;
         //reset bling offset to 0
-        activeColor.SetFloat("_HighLightOffset",0.0f);
+        redColor.SetFloat("_HighLightOffset",0.0f);
+        blueColor.SetFloat("_HighLightOffset",0.0f);
     }
 
     private void Update()
     {
+        float offset = activeColor.GetFloat("_HighLightOffset");
         if (blingMode)
         {
             //if it is blinging
             //get the offset now and increase it by a rate
-            float offset = activeColor.GetFloat("_HighLightOffset");
             activeColor.SetFloat("_HighLightOffset", offset + Time.deltaTime/3.0f);
+            //Debug.Log(offset + Time.deltaTime / 3.0f);
+            //ResetBling();
         }
+
+        if (offset >= 1.0f) ResetBling();
+        
     }
 
 }

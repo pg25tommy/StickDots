@@ -92,6 +92,8 @@ public class GridGenerator : MonoBehaviour
                     Quaternion.identity,
                     _boxBackground);
 
+                boxInstance.SetActive(false);
+
 
                 boxCompleteScript.boxes.Add(boxInstance.gameObject);
             }
