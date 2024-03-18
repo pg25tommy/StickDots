@@ -6,17 +6,16 @@ using UnityEngine;
 public class GridGenerator : MonoBehaviour
 {
     public static GridGenerator Instance;
-    public BoxComplete boxCompleteScript;
-    [SerializeField] Transform _boxBackground;
-    [SerializeField] GameObject _drawPoint;
-    [SerializeField] GameObject _box;
-    [SerializeField] int _gridSize;
+    [SerializeField] private GameObject _drawPointPrefab;
+    [SerializeField] private GameObject _boxBackgroundPrefab;
+    [SerializeField] private float _distance;
+    private BoxComplete _boxCompleteScript;
+    private Transform _boxBackgroundsParent;
     private int _gridX;
     private int _gridY;
-    [SerializeField] float _distance;
-    [SerializeField] Vector3 _gridOrigin = Vector3.zero;
+    private Vector3 _gridOrigin = Vector3.zero;
     private Vector3 _boxOrigin = new Vector3(0.5f, 0.5f, 0);
-    [SerializeField] Vector3 _topRightPoint;
+    private Vector3 _topRightPoint;
     private List<GameObject> _gridPoints = new List<GameObject>();
     private Camera _mainCamera;
 
@@ -35,15 +34,15 @@ public class GridGenerator : MonoBehaviour
 
     private void OnValidate()
     {
-        boxCompleteScript = FindFirstObjectByType<BoxComplete>();
-        _boxBackground = boxCompleteScript.transform;
+        _boxCompleteScript = FindFirstObjectByType<BoxComplete>();
+        _boxBackgroundsParent = _boxCompleteScript.transform;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        _gridX = _gridSize;
-        _gridY = _gridSize;
+        _gridX = GameManager.Instance.W;
+        _gridY = GameManager.Instance.H;
 
         GenerateGrid();
         GenerateBackgroundBoxes();
@@ -63,13 +62,13 @@ public class GridGenerator : MonoBehaviour
                     0f) + _gridOrigin;
 
                 GameObject instance = Instantiate(
-                    _drawPoint, 
+                    _drawPointPrefab, 
                     spawnLocation, 
                     Quaternion.identity, 
                     Dots.transform);
 
                 Dot dot = instance.GetComponent<Dot>();
-                dot.dotCoord = new Vector2(x, y);
+                dot.DotCoord = new Vector2(x, y);
                 _gridPoints.Add(instance);
             }
         }
@@ -87,15 +86,14 @@ public class GridGenerator : MonoBehaviour
                     new Vector3(y * _distance, x * _distance, 0f) + _boxOrigin;
 
                 GameObject boxInstance = Instantiate(
-                    _box, 
+                    _boxBackgroundPrefab, 
                     spawnLocation, 
                     Quaternion.identity,
-                    _boxBackground);
+                    _boxBackgroundsParent);
 
                 boxInstance.SetActive(false);
 
-
-                boxCompleteScript.boxes.Add(boxInstance.gameObject);
+                _boxCompleteScript.BoxBackgrounds.Add(boxInstance.gameObject);
             }
         }
     }
@@ -104,7 +102,7 @@ public class GridGenerator : MonoBehaviour
     {
         _mainCamera.transform.position = Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f);
         _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, -5f);
-        _mainCamera.orthographicSize = _gridSize / _mainCamera.aspect;
+        _mainCamera.orthographicSize = _gridX / _mainCamera.aspect;
     }
 }
 

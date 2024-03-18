@@ -46,12 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085692f8c60c54e4abff3b8fa4663799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotPositions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 0}
-  p1: {x: 0, y: 0}
-  p2: {x: 0, y: 0}
-  lineRendererPrefab: {fileID: 5017993199911747139, guid: b2f234a7cb42bb144b0b4fe3932de450, type: 3}
+  _lineRendererPrefab: {fileID: 5017993199911747139, guid: b2f234a7cb42bb144b0b4fe3932de450, type: 3}
   newLine: 0
 --- !u!114 &575275455836440032
 MonoBehaviour:
@@ -65,14 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14523ddf889ed4b498be96d5f6dfa061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxCompleteScript: {fileID: 0}
-  _boxBackground: {fileID: 0}
-  _drawPoint: {fileID: 1098490563627684600, guid: 32c1b6c13e51c854dbb0b17307b4184f, type: 3}
-  _box: {fileID: 833318340284404113, guid: 0a9fa5fcc1d51c549987969e3c95d504, type: 3}
-  _gridSize: 4
+  _drawPointPrefab: {fileID: 1098490563627684600, guid: 32c1b6c13e51c854dbb0b17307b4184f, type: 3}
+  _boxBackgroundPrefab: {fileID: 833318340284404113, guid: 0a9fa5fcc1d51c549987969e3c95d504, type: 3}
   _distance: 1
-  _gridOrigin: {x: 0, y: 0, z: 0}
-  _topRightPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &2267865735064433497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,11 +75,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5c9d8b6b44e5104cb5440ca477f4e92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  h: 4
-  w: 4
-  nextTurnIndex: 1
-  numOfLinesTotal: 0
-  BoxCapturedEvent:
+  _h: 4
+  _w: 4
+  _playersTurn: 0
+  _aIsTurn: 1
+  _nextTurnIndex: 1
+  _boxCapturedEvent:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 11400000, guid: f80b4f2842852334d8808264393b32c6, type: 2}

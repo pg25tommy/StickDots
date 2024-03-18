@@ -8,15 +8,18 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public Board board;
-    public int h = 4;
-    public int w = 4;
-    public const int playersTurn = 0;
-    public const int AIsTurn = 1;
-    public int nextTurnIndex = 0;
-    public int numOfLinesTotal;
-    public System.Random randomizer = new System.Random();
-    public UnityEvent<Vector3> BoxCapturedEvent;
+    [SerializeField] private int _h = 4;
+    [SerializeField] private int _w = 4;
+    [SerializeField] private int _playersTurn = 0;
+    [SerializeField] private int _aIsTurn = 1;
+    [SerializeField] private int _nextTurnIndex = 0;
+    [SerializeField] private UnityEvent<Vector3> _boxCapturedEvent;
+    private Board _board;
+    private int _numOfLinesTotal;
+    private System.Random _randomizer = new System.Random();
+
+    public int H => _h;
+    public int W => _w;
 
     private void Awake()
     {
@@ -33,20 +36,20 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        board = new Board(h, w);
-        numOfLinesTotal = h * (w - 1) + w * (h - 1);
+        _board = new Board(_h, _w);
+        _numOfLinesTotal = _h * (_w - 1) + _w * (_h - 1);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (nextTurnIndex == AIsTurn)
+        if (_nextTurnIndex == _aIsTurn)
         {
             AIsMove();
         }
 
-        if (board.availableLines.Count > 0)
+        if (_board.AvailableLines.Count > 0)
         {
             // GAME OVER
         }
@@ -54,7 +57,7 @@ public class GameManager : MonoBehaviour
 
     public void CaptureBox(Vector3 boxCoordAndCapturedBy)
     {
-        BoxCapturedEvent.Invoke(boxCoordAndCapturedBy);
+        _boxCapturedEvent.Invoke(boxCoordAndCapturedBy);
     }
 
     public void PlayersMove(Vector2 p1, Vector2 p2)
@@ -71,30 +74,30 @@ public class GameManager : MonoBehaviour
             lineToConnect = p1.x > p2.x ? 
                 Tuple.Create(p2, p1) : Tuple.Create(p1, p2);
         }
-        nextTurnIndex = board.MakeMove(lineToConnect, playersTurn, true);
+        _nextTurnIndex = _board.MakeMove(lineToConnect, _playersTurn, true);
     }
 
     public void AIsMove()
     {
         Tuple<Vector2, Vector2> chosenLine = null;
-        if (board.availableLines.Count >= (int)numOfLinesTotal / 2)
+        if (_board.AvailableLines.Count >= (int)_numOfLinesTotal / 2)
         {
             // Complete the box if any
-            if (board.lastLineForBoxesWithThreeConnections.Any())
+            if (_board.LastLineForBoxesWithThreeConnections.Any())
             {
-                chosenLine = board.lastLineForBoxesWithThreeConnections.Dequeue();
+                chosenLine = _board.LastLineForBoxesWithThreeConnections.Dequeue();
             }
             else
             {
                 // Otherwise randomly choose
                 for (int i = 0; i < 10; i++)
                 {
-                    var randomLine = board.availableLines.ElementAt(
-                        randomizer.Next(board.availableLines.Count));
+                    var randomLine = _board.AvailableLines.ElementAt(
+                        _randomizer.Next(_board.AvailableLines.Count));
 
                     // Check connections but don't connect the lines yet
-                    int[] numConnections = board.CheckBothBoxConnections(
-                        false, AIsTurn, randomLine, false);
+                    int[] numConnections = _board.CheckBothBoxConnections(
+                        false, _aIsTurn, randomLine, false);
 
                     if (numConnections[0] < 2 && numConnections[1] < 2)
                     {
@@ -107,9 +110,9 @@ public class GameManager : MonoBehaviour
 
         if (chosenLine == null)
         {
-            (_, chosenLine) = MinMax.getScore(board, 10, -100000, 100000, AIsTurn);
+            (_, chosenLine) = MinMax.getScore(_board, 10, -100000, 100000, _aIsTurn);
         }
-        nextTurnIndex = board.MakeMove(chosenLine, AIsTurn, true);
+        _nextTurnIndex = _board.MakeMove(chosenLine, _aIsTurn, true);
         Debug.Log($"AI: {chosenLine}");
         LineController.Instance.MakeLine(chosenLine.Item1, chosenLine.Item2);
 

@@ -2,28 +2,35 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class Board
 {
     // Num of dots on verticle axis
-    public int height;
+    private int height;
     // Num of dots on horizontal axis
-    public int width;
+    private int width;
 
-    public float[] score = { 0, 0 };
+    private float[] score = { 0, 0 };
 
-    public Box[][] boxes;
+    private Box[][] boxes;
 
     // HashSet for unique elements
     // (i.e. no repeating when adding the same element)
-    public HashSet<Tuple<Vector2, Vector2>> availableLines =
+    private HashSet<Tuple<Vector2, Vector2>> availableLines =
         new HashSet<Tuple<Vector2, Vector2>>();
-    public HashSet<Tuple<Vector2, Vector2>> connectedLines =
+    private HashSet<Tuple<Vector2, Vector2>> connectedLines =
         new HashSet<Tuple<Vector2, Vector2>>();
 
     // All boxes where 3 lines are already connected
-    public Queue<Tuple<Vector2, Vector2>> lastLineForBoxesWithThreeConnections =
+    private Queue<Tuple<Vector2, Vector2>> lastLineForBoxesWithThreeConnections =
         new Queue<Tuple<Vector2, Vector2>>();
+
+    public float[] Score => score;
+    public HashSet<Tuple<Vector2, Vector2>> AvailableLines => availableLines;
+    public HashSet<Tuple<Vector2, Vector2>> ConnectedLines => connectedLines;
+    public Queue<Tuple<Vector2, Vector2>> LastLineForBoxesWithThreeConnections =>
+        lastLineForBoxesWithThreeConnections;
 
     public Board(int h, int w)
     {
@@ -57,7 +64,7 @@ public class Board
         }
     }
 
-    public Box[][] InitializeBoxes()
+    private Box[][] InitializeBoxes()
     {
         for (int i = 0; i < width - 1; i++)
         {
@@ -72,7 +79,7 @@ public class Board
         return boxes;
     }
 
-    public Box[][] InitializeBoxes(Box[][] originalBoxes)
+    private Box[][] InitializeBoxes(Box[][] originalBoxes)
     {
         for (int i = 0; i < width - 1; i++)
         {
@@ -86,11 +93,11 @@ public class Board
         return boxes;
     }
 
-    public void AddAllLinesOfBoxToAvailableSet(Box box)
+    private void AddAllLinesOfBoxToAvailableSet(Box box)
     {
-        foreach (Line line in box.lines)
+        foreach (Line line in box.Lines)
         {
-            availableLines.Add(line.lineCoords);
+            availableLines.Add(line.LineCoords);
         }
     }
 
@@ -124,7 +131,7 @@ public class Board
         return turnIndex;
     }
 
-    public bool CheckIfEitherBoxCaptured(int[] numConnectedLines)
+    private bool CheckIfEitherBoxCaptured(int[] numConnectedLines)
     {
         foreach (int connections in numConnectedLines)
         {
@@ -134,7 +141,7 @@ public class Board
     }
 
     public int[] CheckBothBoxConnections(bool toConnect, int turnIndex,
-        Tuple<Vector2, Vector2> lineToConnect, bool playCaptureAnimIfCaptured)
+        Tuple<Vector2, Vector2> lineToConnect, bool toPlayCaptureAnimIfCaptured)
     {
         int[] numConnectionsEachBox = new int[2];
         int firstDotX = (int)lineToConnect.Item1.x;
@@ -158,25 +165,23 @@ public class Board
             // top and bottom boxes if line is horizontal
             Box box = isHorizontal ? boxes[firstDotX][i] : boxes[i][firstDotY];
 
-                
-            //string debug = isHorizontal ? $"{firstDotX}, {i}" : $"{i}, {firstDotY}";
-            //Debug.Log(debug);
-
             if (toConnect)
                 box.ConnectDots(lineToConnect);
 
-            numConnectionsEachBox[index] = box.numConnectedLines;
+            numConnectionsEachBox[index] = box.NumConnectedLines;
 
-            if (box.numConnectedLines == 3)
+            if (box.NumConnectedLines == 3)
                 AddLastLineToQueue(box);
 
             // If capture box this round
+            // Note that if this function is called from MinMax,
+            // we don't want to play animation
             else if (
-                playCaptureAnimIfCaptured &&
-                box.numConnectedLines == 4 && 
-                box.capturedBy == -1)
+                toPlayCaptureAnimIfCaptured &&
+                box.NumConnectedLines == 4 && 
+                box.CapturedBy == -1)
             {
-                box.capturedBy = turnIndex;
+                box.CapturedBy = turnIndex;
                 Vector3 boxCoordAndCapturedBy = isHorizontal ?
                     new Vector3(firstDotX, i, turnIndex) :
                     new Vector3(i, firstDotY, turnIndex);
@@ -189,18 +194,18 @@ public class Board
         return numConnectionsEachBox;
     }
 
-    public void AddLastLineToQueue(Box box)
+    private void AddLastLineToQueue(Box box)
     {
         // box already has 3 connected lines, get the one that is not connected
-        foreach (Line line in box.lines)
+        foreach (Line line in box.Lines)
         {
             // Add to list if the line is not connected
-            if (!line.connected)
-                lastLineForBoxesWithThreeConnections.Enqueue(line.lineCoords);
+            if (!line.Connected)
+                lastLineForBoxesWithThreeConnections.Enqueue(line.LineCoords);
         }
     }
 
-    public bool IsHorizontalLine(Tuple<Vector2, Vector2> line)
+    private bool IsHorizontalLine(Tuple<Vector2, Vector2> line)
     {
         // If the x coord of first dot equals to  
         // x coord of the second dot, then vertical line

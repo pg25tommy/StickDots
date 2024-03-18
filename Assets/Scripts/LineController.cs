@@ -5,15 +5,15 @@ using UnityEngine;
 public class LineController : MonoBehaviour
 {
     public static LineController Instance;
-    private GameObject lineParent;
-    public Vector3[] dotPositions = new Vector3[2];
-    public Vector2 p1;
-    public Vector2 p2;
-    public LineRenderer lineRendererPrefab;
+    private GameObject _lineParent;
+    private Vector3[] _dotPositions = new Vector3[2];
+    private Vector2 _p1;
+    private Vector2 _p2;
+    [SerializeField] private LineRenderer _lineRendererPrefab;
 
     //public Color validColor = Color.green;
     //public Color invalidColor = Color.red;
-    public bool newLine = false;
+    private bool newLine = false;
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class LineController : MonoBehaviour
 
     private void Start()
     {
-        lineParent = new GameObject("LineDrawings");
+        _lineParent = new GameObject("LineDrawings");
     }
 
     void Update()
@@ -44,8 +44,8 @@ public class LineController : MonoBehaviour
             {
                 if (hit.collider != null && hit.collider.CompareTag("dot"))
                 {
-                    dotPositions[0] = hit.collider.transform.position;
-                    p1 = hit.collider.transform.GetComponent<Dot>().dotCoord;
+                    _dotPositions[0] = hit.collider.transform.position;
+                    _p1 = hit.collider.transform.GetComponent<Dot>().DotCoord;
                 }
             }
         }
@@ -61,10 +61,10 @@ public class LineController : MonoBehaviour
                 // if raycast hit dot and 
                 if (hit.collider != null && hit.collider.CompareTag("dot"))
                 {
-                    dotPositions[1] = hit.collider.transform.position;
-                    p2 = hit.collider.transform.GetComponent<Dot>().dotCoord;
-                    if (p1.y == p2.y && Mathf.Abs(p1.x - p2.x) == 1 ||
-                        p1.x == p2.x && Mathf.Abs(p1.y - p2.y) == 1)
+                    _dotPositions[1] = hit.collider.transform.position;
+                    _p2 = hit.collider.transform.GetComponent<Dot>().DotCoord;
+                    if (_p1.y == _p2.y && Mathf.Abs(_p1.x - _p2.x) == 1 ||
+                        _p1.x == _p2.x && Mathf.Abs(_p1.y - _p2.y) == 1)
                     {
                         newLine = true;
                     }
@@ -74,17 +74,17 @@ public class LineController : MonoBehaviour
 
         if (newLine)
         {
-            LineRenderer lineRenderer = Instantiate(lineRendererPrefab, lineParent.transform);
-            lineRenderer.SetPositions(dotPositions);
-            Debug.Log($"Human: {p1}, {p2}");
-            GameManager.Instance.PlayersMove(p1, p2);
+            LineRenderer lineRenderer = Instantiate(_lineRendererPrefab, _lineParent.transform);
+            lineRenderer.SetPositions(_dotPositions);
+            Debug.Log($"Human: {_p1}, {_p2}");
+            GameManager.Instance.PlayersMove(_p1, _p2);
             newLine = false;
         }
     }
 
     public void MakeLine(Vector2 p1, Vector2 p2)
     {
-        LineRenderer lineRenderer = Instantiate(lineRendererPrefab, lineParent.transform);
+        LineRenderer lineRenderer = Instantiate(_lineRendererPrefab, _lineParent.transform);
         Vector3[] dotsToConnect = new Vector3[2];
         dotsToConnect[0] = p1;
         dotsToConnect[1] = p2;

@@ -5,14 +5,22 @@ using UnityEngine;
 
 public class Box
 {
-    public List<Line> lines = new List<Line>();
+    private List<Line> lines = new List<Line>();
 
     // TODO: Use enum
     // -1: Not yet captured
     // 0: Captured by player
     // 1: Captured by AI
-    public int capturedBy = -1;
-    public int numConnectedLines = 0;
+    private int capturedBy = -1;
+    private int numConnectedLines = 0;
+
+    public List<Line> Lines => lines;
+    public int CapturedBy
+    {
+        get { return capturedBy; }
+        set { capturedBy = value; }
+    }
+    public int NumConnectedLines => numConnectedLines;
 
     public Box(Vector2 coordUppderLeft)
     {
@@ -56,10 +64,10 @@ public class Box
     {
         foreach (Line line in lines)
         {
-            if (line.lineCoords.Item1 == lineToConnect.Item1 &&
-                line.lineCoords.Item2 == lineToConnect.Item2)
+            if (line.LineCoords.Item1 == lineToConnect.Item1 &&
+                line.LineCoords.Item2 == lineToConnect.Item2)
             {
-                line.connected = true;
+                line.Connected = true;
                 numConnectedLines++;
                 return;
             }

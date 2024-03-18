@@ -20,11 +20,11 @@ public class MinMax
         // Base case when a leaf node is reached
         // return the AI score - human score
         if (currentDepth == 0 ||
-            currentBoardState.availableLines.Count == 0)
+            currentBoardState.AvailableLines.Count == 0)
         {
             return (
-                currentBoardState.score[AITurnIndex] -
-                currentBoardState.score[AITurnIndex - 1],
+                currentBoardState.Score[AITurnIndex] -
+                currentBoardState.Score[AITurnIndex - 1],
                 bestLine);
         }
 
@@ -39,7 +39,7 @@ public class MinMax
             bestScore = 100000;
 
         HashSet<Tuple<Vector2, Vector2>> availableLines =
-            currentBoardState.availableLines;
+            currentBoardState.AvailableLines;
 
         foreach (var line in availableLines)
         {

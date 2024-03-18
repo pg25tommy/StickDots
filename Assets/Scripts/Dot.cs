@@ -4,5 +4,11 @@ using UnityEngine;
 
 public class Dot: MonoBehaviour
 {
-    public Vector2 dotCoord;
+    private Vector2 _dotCoord;
+
+    public Vector2 DotCoord
+    {
+        get { return _dotCoord; }
+        set { _dotCoord = value; }
+    }
 }

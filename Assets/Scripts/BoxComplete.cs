@@ -13,11 +13,11 @@ enum PlayerColour
 
 public class BoxComplete : MonoBehaviour
 {
-    public List<GameObject> boxes = new List<GameObject>();
+    private List<GameObject> boxBackgrounds = new List<GameObject>();
 
-    [SerializeField] Material blueColor;
-    [SerializeField] Material redColor;
-    [SerializeField] Material activeColor;
+    [SerializeField] private Material blueColor;
+    [SerializeField] private Material redColor;
+    [SerializeField] private Material activeColor;
 
 
     private int col;
@@ -25,13 +25,19 @@ public class BoxComplete : MonoBehaviour
     //[SerializeField] Player winPlayer;
     //[SerializeField] int col;
     //[SerializeField] int x, y;
-    [SerializeField] bool blingMode;
+    private bool blingMode;
+
+    public List<GameObject> BoxBackgrounds
+    {
+        get { return boxBackgrounds; }
+        set { boxBackgrounds = value; }
+    }
 
     private void Start()
     {
         // Width in GameManager stores num of dots
         // For box need to -1
-        col = GameManager.Instance.w - 1;
+        col = GameManager.Instance.W - 1;
         blingMode = false;
         ResetBling();
     }
@@ -71,7 +77,7 @@ public class BoxComplete : MonoBehaviour
         int y = (int)boxCoordAndCapturedBy .y;
         winPlayer = (PlayerColour)boxCoordAndCapturedBy.z;
         //get the specific gameobject render by hash code
-        Renderer ren = boxes[getBoxHash(x, y)].gameObject.GetComponent<Renderer>();
+        Renderer ren = boxBackgrounds[getBoxHash(x, y)].gameObject.GetComponent<Renderer>();
         //set
         if (winPlayer == PlayerColour.player_blue)
         {

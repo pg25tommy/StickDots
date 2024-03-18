@@ -5,19 +5,26 @@ using UnityEngine;
 
 public class Line
 {
-    public Tuple<Vector2, Vector2> lineCoords;
-    public bool connected;
+    private Tuple<Vector2, Vector2> _lineCoords;
+    private bool _connected;
+
+    public Tuple<Vector2, Vector2> LineCoords => _lineCoords;
+    public bool Connected 
+    { 
+        get { return _connected; } 
+        set { _connected = value; }
+    }
 
     public Line(Vector2 p1, Vector2 p2)
     {
-        lineCoords = Tuple.Create(p1, p2);
-        connected = false;
+        _lineCoords = Tuple.Create(p1, p2);
+        _connected = false;
     }
 
     // Copy constructor of Line
     public Line(Line otherLine)
     {
-        lineCoords = otherLine.lineCoords;
-        connected = otherLine.connected;
+        _lineCoords = otherLine._lineCoords;
+        _connected = otherLine._connected;
     }
 }
