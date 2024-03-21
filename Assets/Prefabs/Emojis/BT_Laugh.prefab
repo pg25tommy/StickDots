@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6818123158893002314}
   - component: {fileID: 1668212736694380536}
   - component: {fileID: 1509417652169598881}
+  - component: {fileID: 2728605166572579226}
   m_Layer: 5
   m_Name: BT_Laugh
   m_TagString: Untagged
@@ -69,7 +70,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: a022bcda459ebee469e765e072ea2987, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -147,3 +148,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emojiPrefab: {fileID: 6284348987225274631, guid: f5a9f35d463cdec47841a0137b303f48, type: 3}
   emojiAnimation: laugh
+  spawnTransform: {fileID: 0}
+--- !u!95 &2728605166572579226
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6163886670630993219}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2bf62b8d1cc2a094d96ba371f713caef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
