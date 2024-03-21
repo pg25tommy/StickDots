@@ -6,6 +6,7 @@ public class GamePlayManager : MonoBehaviour
 {
     [SerializeField] PlayerData[] playerDatas;
     [SerializeField] GameObject playerPrefab;
+    [SerializeField] private GameObject playerContainer;
     [HideInInspector] public Player[] players;
     public int currentPlayerIndex { get; private set; } = 0;
     public static GamePlayManager Instance { get; private set; }
@@ -45,6 +46,7 @@ public class GamePlayManager : MonoBehaviour
             if (playerPrefab != null)
             {
                 GameObject playerObject = Instantiate(playerPrefab);
+                playerObject.transform.parent = playerContainer.transform;
                 players[i] = playerObject.AddComponent<Player>();
                 players[i].GetComponent<Player>().playerIndex = i;
                 players[i].GetComponent<Player>().myColor = playerDatas[i].myColor;
