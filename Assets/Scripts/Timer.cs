@@ -40,12 +40,12 @@ public class Timer : MonoBehaviour
             }
             else
             {
-                if (timeRemaining <= 30 && timeRemaining > 10)
+                if (timeRemaining <= 15 && timeRemaining > 5)
                 {
                     if (beepSound != null)
                         AudioSource.PlayClipAtPoint(beepSound, transform.position);
                 }
-                else if (timeRemaining <= 10)
+                else if (timeRemaining <= 5)
                 {
                     if (beepSound != null)
                         AudioSource.PlayClipAtPoint(beepSound, transform.position);
