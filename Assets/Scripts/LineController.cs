@@ -9,7 +9,10 @@ public class LineController : MonoBehaviour
     private Vector3[] _dotPositions = new Vector3[2];
     private Vector2 _p1;
     private Vector2 _p2;
-    [SerializeField] private LineRenderer _lineRendererPrefab;
+    //[SerializeField] private LineRenderer _lineRendererPrefab;
+    [SerializeField] private GameObject _LineDrawablePrefab;
+    [SerializeField] private GameObject _LineStaticPrefab;
+
 
     //public Color validColor = Color.green;
     //public Color invalidColor = Color.red;
@@ -36,6 +39,7 @@ public class LineController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            /*
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -48,10 +52,12 @@ public class LineController : MonoBehaviour
                     _p1 = hit.collider.transform.GetComponent<Dot>().DotCoord;
                 }
             }
+            */
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+            /*
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             newLine = false;
@@ -70,25 +76,41 @@ public class LineController : MonoBehaviour
                     }
                 }
             }
+            */
         }
 
         if (newLine)
         {
+            /*
             LineRenderer lineRenderer = Instantiate(_lineRendererPrefab, _lineParent.transform);
             lineRenderer.SetPositions(_dotPositions);
             Debug.Log($"Human: {_p1}, {_p2}");
             GameManager.Instance.PlayersMove(_p1, _p2);
             newLine = false;
+            */
         }
     }
 
+    /*
+    ************* Input Event *****************
+    */
+    
+
+    /*
+    *******************************************
+    */
+
+
+
     public void MakeLine(Vector2 p1, Vector2 p2)
     {
+        /*
         LineRenderer lineRenderer = Instantiate(_lineRendererPrefab, _lineParent.transform);
         Vector3[] dotsToConnect = new Vector3[2];
         dotsToConnect[0] = p1;
         dotsToConnect[1] = p2;
         lineRenderer.SetPositions(dotsToConnect);
+        */
     }
 
     // Animation 
