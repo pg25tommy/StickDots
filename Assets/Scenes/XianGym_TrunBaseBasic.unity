@@ -249,6 +249,7 @@ GameObject:
   m_Component:
   - component: {fileID: 426354045}
   - component: {fileID: 426354044}
+  - component: {fileID: 426354046}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -333,6 +334,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &426354046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426354043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &524327149
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,10 +670,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14523ddf889ed4b498be96d5f6dfa061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _drawPoint: {fileID: 1098490563627684600, guid: 32c1b6c13e51c854dbb0b17307b4184f, type: 3}
-  _gridSize: 5
+  _drawPointPrefab: {fileID: 1098490563627684600, guid: 32c1b6c13e51c854dbb0b17307b4184f, type: 3}
+  _boxBackgroundPrefab: {fileID: 3939462985842249313, guid: 95171e755196ad549b531b308096a8aa, type: 3}
   _distance: 1
-  _gridOrigin: {x: -2, y: -2, z: 0}
 --- !u!4 &1260927181
 Transform:
   m_ObjectHideFlags: 0
@@ -901,11 +924,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2870960812067091564, guid: 93dca05360d261d4ca40a7d0d4206ea7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3468380084856097739, guid: 93dca05360d261d4ca40a7d0d4206ea7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4065830581799153476, guid: 93dca05360d261d4ca40a7d0d4206ea7, type: 3}
       propertyPath: m_Pivot.x
@@ -989,7 +1012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5078033998076304183, guid: 93dca05360d261d4ca40a7d0d4206ea7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8067434532505438874, guid: 93dca05360d261d4ca40a7d0d4206ea7, type: 3}
       propertyPath: m_Name

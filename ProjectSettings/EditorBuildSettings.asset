@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/02_Lobby_Scene.unity
     guid: 45ad37bb265f6f14b88b1659fd76a4d6
   - enabled: 1
-    path: Assets/Scenes/00_To_delete/GameScene.unity
-    guid: f5b78302fba4f35428b2827ea4739feb
+    path: Assets/Scenes/03_Play_Against_AI.unity
+    guid: 1601345b395f4204f9e1d818905810fb
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
