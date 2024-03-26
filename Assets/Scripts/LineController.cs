@@ -46,71 +46,81 @@ public class LineController : MonoBehaviour
 
     }
 
+    // call on finger touch event
+    private void OnTouch()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // Check if the ray hits an object with the "dot" tag
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider != null && hit.collider.CompareTag("dot"))
+            {
+                //record first position
+                _dotPositions[0] = hit.collider.transform.position;
+                _p1 = hit.collider.transform.GetComponent<Dot>().DotCoord;
+
+                //draw sprite line from position to mouse
+                _lineDrawableSpriteController.stopStrinking();
+                _LineDrawable.SetActive(true);
+                drawing = true;
+            }
+        }
+    }
+
+    //call on finger release event
+    private void OnRelease()
+    {
+        //strink lineDrawable
+        if (drawing)
+        {
+            _lineDrawableSpriteController.startStrinking();
+        }
+
+        //stop drawing lineDrawable
+        drawing = false;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // Check if the ray hits an object with the "dot" tag
+        if (Physics.Raycast(ray, out hit))
+        {
+            // if raycast hit dot and 
+            if (hit.collider != null && hit.collider.CompareTag("dot"))
+            {
+                //record second position
+                _dotPositions[1] = hit.collider.transform.position;
+                _p2 = hit.collider.transform.GetComponent<Dot>().DotCoord;
+
+                //drawline if distance between two dots position is 1
+                if (_p1.y == _p2.y && Mathf.Abs(_p1.x - _p2.x) == 1 ||
+                    _p1.x == _p2.x && Mathf.Abs(_p1.y - _p2.y) == 1)
+                {
+                    MakeLine(_dotPositions[0], _dotPositions[1]);
+
+
+                    Debug.Log($"Human: {_p1}, {_p2}");
+                    GameManager.Instance.PlayersMove(_p1, _p2);
+
+                    //hide lineDrawable if creating new line
+                    _LineDrawable.SetActive(false);
+                }
+            }
+        }
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            // Check if the ray hits an object with the "dot" tag
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider != null && hit.collider.CompareTag("dot"))
-                {
-                    //record first position
-                    _dotPositions[0] = hit.collider.transform.position;
-                    _p1 = hit.collider.transform.GetComponent<Dot>().DotCoord;
-
-                    //draw sprite line from position to mouse
-                    _lineDrawableSpriteController.stopStrinking();
-                    _LineDrawable.SetActive(true);
-                    drawing = true;
-                }
-            }
+            OnTouch();           
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            //strink lineDrawable
-            if (drawing)
-            {
-                _lineDrawableSpriteController.startStrinking();
-            }
-
-            //stop drawing lineDrawable
-            drawing = false;
-            
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            // Check if the ray hits an object with the "dot" tag
-            if (Physics.Raycast(ray, out hit))
-            {
-                // if raycast hit dot and 
-                if (hit.collider != null && hit.collider.CompareTag("dot"))
-                {
-                    //record second position
-                    _dotPositions[1] = hit.collider.transform.position;
-                    _p2 = hit.collider.transform.GetComponent<Dot>().DotCoord;
-
-                    //drawline if distance between two dots position is 1
-                    if (_p1.y == _p2.y && Mathf.Abs(_p1.x - _p2.x) == 1 ||
-                        _p1.x == _p2.x && Mathf.Abs(_p1.y - _p2.y) == 1)
-                    {
-                        MakeLine(_dotPositions[0], _dotPositions[1]);
-
-
-                        Debug.Log($"Human: {_p1}, {_p2}");
-                        GameManager.Instance.PlayersMove(_p1, _p2);
-
-                        //hide lineDrawable if creating new line
-                        _LineDrawable.SetActive(false);
-                    }
-                }
-            }
-            
+           OnRelease();            
         }
 
         if ( drawing )
