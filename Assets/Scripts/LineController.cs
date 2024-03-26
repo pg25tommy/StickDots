@@ -19,7 +19,6 @@ public class LineController : MonoBehaviour
     //public Color validColor = Color.green;
     //public Color invalidColor = Color.red;
     private bool drawing = false;
-    private bool newLine = false;
 
     private void Awake()
     {
@@ -51,6 +50,7 @@ public class LineController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -62,7 +62,7 @@ public class LineController : MonoBehaviour
                     //record first position
                     _dotPositions[0] = hit.collider.transform.position;
                     _p1 = hit.collider.transform.GetComponent<Dot>().DotCoord;
-                    
+
                     //draw sprite line from position to mouse
                     _LineDrawable.SetActive(true);
                     drawing = true;
@@ -75,12 +75,12 @@ public class LineController : MonoBehaviour
             //stop drawing lineDrawable
             drawing = false;
 
-            //remove lineDrawable
-            _LineDrawable.SetActive(false);
+            //strink lineDrawable
+            _lineDrawableSpriteController.startStrinking();
             
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            newLine = false;
+
             // Check if the ray hits an object with the "dot" tag
             if (Physics.Raycast(ray, out hit))
             {
@@ -95,7 +95,14 @@ public class LineController : MonoBehaviour
                     if (_p1.y == _p2.y && Mathf.Abs(_p1.x - _p2.x) == 1 ||
                         _p1.x == _p2.x && Mathf.Abs(_p1.y - _p2.y) == 1)
                     {
-                        newLine = true;
+                        MakeLine(_dotPositions[0], _dotPositions[1]);
+
+
+                        Debug.Log($"Human: {_p1}, {_p2}");
+                        GameManager.Instance.PlayersMove(_p1, _p2);
+
+                        //hide lineDrawable if creating new line
+                        _LineDrawable.SetActive(false);
                     }
                 }
             }
@@ -110,20 +117,6 @@ public class LineController : MonoBehaviour
                 //draw lineDrawable
                 _lineDrawableSpriteController.SetLine(_dotPositions[0], mousePositionOnProjection());
             }
-        }
-
-        if (newLine)
-        {
-            /*
-            LineRenderer lineRenderer = Instantiate(_lineRendererPrefab, _lineParent.transform);
-            lineRenderer.SetPositions(_dotPositions);
-            */
-            MakeLine(_dotPositions[0], _dotPositions[1]);
-            
-
-            Debug.Log($"Human: {_p1}, {_p2}");
-            GameManager.Instance.PlayersMove(_p1, _p2);
-            newLine = false;
         }
     }
 
@@ -155,7 +148,7 @@ public class LineController : MonoBehaviour
         //dotsToConnect[0] = p1;
         //dotsToConnect[1] = p2;
         lineSprite.GetComponent<LineSpriteController>().SetLine(p1, p2);
-        Debug.Log("called?");
+        //Debug.Log($"{p1} , { p2} ");
     }
 
     // Animation 

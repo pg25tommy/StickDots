@@ -50,7 +50,31 @@ MonoBehaviour:
   line: {fileID: 7168236537196527552}
   startPoint: {fileID: 5817787782256255288}
   endPoint: {fileID: 5790695710683704082}
-  thickness: 0.1
+  thickness: 0.15
+  _animationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -29.321188
+      outSlope: -29.321188
+      tangentMode: 0
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.03899572
+    - serializedVersion: 3
+      time: 0.83333
+      value: 0
+      inSlope: -0.036277298
+      outSlope: -0.036277298
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.9361888
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5790695710683704082
 GameObject:
   m_ObjectHideFlags: 0
