@@ -9,11 +9,16 @@ public class LineController : MonoBehaviour
     private Vector3[] _dotPositions = new Vector3[2];
     private Vector2 _p1;
     private Vector2 _p2;
-    [SerializeField] private LineRenderer _lineRendererPrefab;
+    private LineSpriteController _lineDrawableSpriteController;
+    //[SerializeField] private LineRenderer _lineRendererPrefab;
+    [SerializeField] private GameObject _LineDrawablePrefab;
+    [SerializeField] private GameObject _LineDrawable;
+    [SerializeField] private GameObject _LineStaticPrefab;
+
 
     //public Color validColor = Color.green;
     //public Color invalidColor = Color.red;
-    private bool newLine = false;
+    private bool drawing = false;
 
     private void Awake()
     {
@@ -30,65 +35,134 @@ public class LineController : MonoBehaviour
     private void Start()
     {
         _lineParent = new GameObject("LineDrawings");
+
+        //instantiate lineDrawable
+        if (_LineDrawable == null)
+        {
+            _LineDrawable = Instantiate(_LineDrawablePrefab);
+            _lineDrawableSpriteController = _LineDrawable.GetComponent<LineSpriteController>();
+            _LineDrawable.SetActive(false);
+        }
+
+    }
+
+    // call on finger touch event
+    private void OnTouch()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // Check if the ray hits an object with the "dot" tag
+        if (Physics.Raycast(ray, out hit))
+        {
+            if (hit.collider != null && hit.collider.CompareTag("dot"))
+            {
+                //record first position
+                _dotPositions[0] = hit.collider.transform.position;
+                _p1 = hit.collider.transform.GetComponent<Dot>().DotCoord;
+
+                //draw sprite line from position to mouse
+                _lineDrawableSpriteController.stopStrinking();
+                _LineDrawable.SetActive(true);
+                drawing = true;
+            }
+        }
+    }
+
+    //call on finger release event
+    private void OnRelease()
+    {
+        //strink lineDrawable
+        if (drawing)
+        {
+            _lineDrawableSpriteController.startStrinking();
+        }
+
+        //stop drawing lineDrawable
+        drawing = false;
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        // Check if the ray hits an object with the "dot" tag
+        if (Physics.Raycast(ray, out hit))
+        {
+            // if raycast hit dot and 
+            if (hit.collider != null && hit.collider.CompareTag("dot"))
+            {
+                //record second position
+                _dotPositions[1] = hit.collider.transform.position;
+                _p2 = hit.collider.transform.GetComponent<Dot>().DotCoord;
+
+                //drawline if distance between two dots position is 1
+                if (_p1.y == _p2.y && Mathf.Abs(_p1.x - _p2.x) == 1 ||
+                    _p1.x == _p2.x && Mathf.Abs(_p1.y - _p2.y) == 1)
+                {
+                    MakeLine(_dotPositions[0], _dotPositions[1]);
+
+
+                    Debug.Log($"Human: {_p1}, {_p2}");
+                    GameManager.Instance.PlayersMove(_p1, _p2);
+
+                    //hide lineDrawable if creating new line
+                    _LineDrawable.SetActive(false);
+                }
+            }
+        }
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            // Check if the ray hits an object with the "dot" tag
-            if (Physics.Raycast(ray, out hit))
-            {
-                if (hit.collider != null && hit.collider.CompareTag("dot"))
-                {
-                    _dotPositions[0] = hit.collider.transform.position;
-                    _p1 = hit.collider.transform.GetComponent<Dot>().DotCoord;
-                }
-            }
+            OnTouch();           
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            newLine = false;
-            // Check if the ray hits an object with the "dot" tag
-            if (Physics.Raycast(ray, out hit))
-            {
-                // if raycast hit dot and 
-                if (hit.collider != null && hit.collider.CompareTag("dot"))
-                {
-                    _dotPositions[1] = hit.collider.transform.position;
-                    _p2 = hit.collider.transform.GetComponent<Dot>().DotCoord;
-                    if (_p1.y == _p2.y && Mathf.Abs(_p1.x - _p2.x) == 1 ||
-                        _p1.x == _p2.x && Mathf.Abs(_p1.y - _p2.y) == 1)
-                    {
-                        newLine = true;
-                    }
-                }
-            }
+           OnRelease();            
         }
 
-        if (newLine)
+        if ( drawing )
         {
-            LineRenderer lineRenderer = Instantiate(_lineRendererPrefab, _lineParent.transform);
-            lineRenderer.SetPositions(_dotPositions);
-            Debug.Log($"Human: {_p1}, {_p2}");
-            GameManager.Instance.PlayersMove(_p1, _p2);
-            newLine = false;
+            //safty check
+            if (_LineDrawable.activeSelf)
+            {
+                //draw lineDrawable
+                _lineDrawableSpriteController.SetLine(_dotPositions[0], mousePositionOnProjection());
+            }
         }
     }
 
+    /*
+    ************* Input Event *****************
+    */
+    
+
+    /*
+    *******************************************
+    */
+
+    Vector3 mousePositionOnProjection()
+    {
+        Vector3 screenPoint = Input.mousePosition;
+        screenPoint.z = Camera.main.orthographicSize;
+
+        return Camera.main.ScreenToWorldPoint(screenPoint);
+    }
+
+
     public void MakeLine(Vector2 p1, Vector2 p2)
     {
+        /*
         LineRenderer lineRenderer = Instantiate(_lineRendererPrefab, _lineParent.transform);
-        Vector3[] dotsToConnect = new Vector3[2];
-        dotsToConnect[0] = p1;
-        dotsToConnect[1] = p2;
-        lineRenderer.SetPositions(dotsToConnect);
+        */
+        GameObject lineSprite = Instantiate(_LineStaticPrefab, _lineParent.transform);
+        //Vector3[] dotsToConnect = new Vector3[2];
+        //dotsToConnect[0] = p1;
+        //dotsToConnect[1] = p2;
+        lineSprite.GetComponent<LineSpriteController>().SetLine(p1, p2);
+        //Debug.Log($"{p1} , { p2} ");
     }
 
     // Animation 
