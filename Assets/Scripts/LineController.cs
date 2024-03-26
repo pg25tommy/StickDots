@@ -72,11 +72,14 @@ public class LineController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            //strink lineDrawable
+            if (drawing)
+            {
+                _lineDrawableSpriteController.startStrinking();
+            }
+
             //stop drawing lineDrawable
             drawing = false;
-
-            //strink lineDrawable
-            _lineDrawableSpriteController.startStrinking();
             
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
