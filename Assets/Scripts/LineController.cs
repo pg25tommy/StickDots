@@ -64,6 +64,7 @@ public class LineController : MonoBehaviour
                     _p1 = hit.collider.transform.GetComponent<Dot>().DotCoord;
 
                     //draw sprite line from position to mouse
+                    _lineDrawableSpriteController.stopStrinking();
                     _LineDrawable.SetActive(true);
                     drawing = true;
                 }
