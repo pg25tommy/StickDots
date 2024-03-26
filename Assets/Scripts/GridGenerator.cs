@@ -18,6 +18,7 @@ public class GridGenerator : MonoBehaviour
     private Vector3 _topRightPoint;
     private List<GameObject> _gridPoints = new List<GameObject>();
     private Camera _mainCamera;
+    private CameraController _cameraController;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class GridGenerator : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
         _mainCamera = FindFirstObjectByType<Camera>();
+        _cameraController = FindFirstObjectByType<CameraController>();
     }
 
     private void OnValidate()
@@ -102,7 +104,11 @@ public class GridGenerator : MonoBehaviour
     {
         _mainCamera.transform.position = Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f);
         _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, -5f);
+
+        // TODO: Change to set camera size by bounds 
         _mainCamera.orthographicSize = _gridX / _mainCamera.aspect;
+
+        _cameraController.SetCamera(10.0f, Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f),1.5f, 10.0f);
     }
 }
 

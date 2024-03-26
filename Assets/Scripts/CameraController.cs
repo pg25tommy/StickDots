@@ -14,6 +14,10 @@ public class CameraController : MonoBehaviour
     //Reference of the camera
     private Camera _mainCamera;
 
+    // How far 
+    private float _minZoom = 1.5f;
+    private float _maxZoom;
+
     private Coroutine _zoomCoroutine;
 
     [SerializeField] private float _cameraSpeed = 4f;
@@ -69,12 +73,12 @@ public class CameraController : MonoBehaviour
         {
             distance = Vector2.Distance(_controls.CameraMovement.PrimaryFingerPosition.ReadValue<Vector2>(), _controls.CameraMovement.SecondaryFingerPosition.ReadValue<Vector2>());
 
-            if (distance > previousDistance && _mainCamera.orthographicSize > 2.0f)
+            if (distance > previousDistance && _mainCamera.orthographicSize > _minZoom)
             {
                 _mainCamera.orthographicSize -= Time.deltaTime * _cameraSpeed;
             }
 
-            else if(distance < previousDistance && _mainCamera.orthographicSize < 10.0f)
+            else if(distance < previousDistance && _mainCamera.orthographicSize < _maxZoom)
             {
                 _mainCamera.orthographicSize += Time.deltaTime * _cameraSpeed;
             }
@@ -111,5 +115,15 @@ public class CameraController : MonoBehaviour
 
         return _mainCamera.ScreenToWorldPoint(MousePos);
 
+    }
+
+    // Method that sets the beginning size, beginning position, min zoom, max zoom, and movement restrictions of the camera
+    public void SetCamera(float startSize, Vector3 startPos, float minZoom, float maxZoom)
+    {
+        _mainCamera.orthographicSize = startSize;
+        _mainCamera.transform.position = startPos;
+        _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, -5f);
+        _minZoom = minZoom;
+        _maxZoom = maxZoom;
     }
 }
