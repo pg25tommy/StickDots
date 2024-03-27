@@ -63,8 +63,8 @@ public class MiniMaxBitboard
 
                 if (currentBoardState.IsLineConnected(i, j)) continue;
 
-                //// Use copy constructor to create a new board for
-                //// minmax score calculation
+                // Use copy constructor to create a new board for
+                // minmax score calculation
                 nextBoardState = new Bitboard(currentBoardState);
                 int nextTurnIndex = nextBoardState.MakeMove(i, j, currentTurnIndex, false);
 

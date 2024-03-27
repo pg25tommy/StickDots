@@ -20,6 +20,8 @@ public class Bitboard
     // Num of dots on horizontal axis
     private int width;
 
+    private int totalBoxes;
+
     private float[] score = { 0, 0 };
 
     // Each uint represents a box
@@ -42,8 +44,9 @@ public class Bitboard
     {
         height = h;
         width = w;
+        totalBoxes = (height - 1) * (width - 1);
         // E.g. 4dots x 4dots grid has 9 boxes
-        boxes = new byte[(height - 1) * (width - 1)];
+        boxes = new byte[totalBoxes];
     }
 
     // Copy constructor
@@ -52,11 +55,11 @@ public class Bitboard
     {
         height = originalBoardState.height;
         width = originalBoardState.width;
+        totalBoxes = originalBoardState.totalBoxes;
         score = new[] { originalBoardState.score[0], originalBoardState.score[1] };
 
-        int numBoxes = (height - 1) * (width - 1);
-        boxes = new byte[numBoxes];
-        for (int i = 0; i < numBoxes; i++)
+        boxes = new byte[totalBoxes];
+        for (int i = 0; i < totalBoxes; i++)
         {
             boxes[i] = originalBoardState.boxes[i];
         }
@@ -134,16 +137,23 @@ public class Bitboard
     public (int, int) GetOtherBoxAndLineIndex(
         int firstBoxIndex, int firstLineIndex)
     {
+        int secondBoxIndex = -1;
         // If horizontal get bottom line of the box above
         if (firstLineIndex == (int)BitIndex.Top || 
             firstLineIndex == (int)BitIndex.Bottom)
         {
-            return (firstBoxIndex + width - 1, (int) BitIndex.Bottom);
+            // if not out of bound
+            if (firstBoxIndex + width - 1 < totalBoxes)
+                secondBoxIndex = firstBoxIndex + width - 1;
+            return (secondBoxIndex, (int) BitIndex.Bottom);
         }
         // If vertical get left line of the box to the right
         else
         {
-            return (firstBoxIndex + 1, (int) BitIndex.Left);
+            // if not out of bound
+            if (firstBoxIndex + 1 < firstBoxIndex / (width - 1) + width - 1)
+                secondBoxIndex = firstBoxIndex + 1;
+            return (secondBoxIndex, (int) BitIndex.Left);
         }
     }
 
@@ -159,6 +169,7 @@ public class Bitboard
         int[] lineIndices = new int[] {lineIndex, otherLineIndex};
         for (int i = 0; i < 2; i++)
         {
+            if (boxIndex == -1) continue;
             ConnectLine(boxIndices[i], lineIndices[i]);
             int numLinesConnected = GetBoxConnections(boxIndices[i]);
 
@@ -166,7 +177,7 @@ public class Bitboard
             // i.e. all 4 lines connected but flag not yet set
             if (numLinesConnected == 4 && !IsBoxCaptured(boxIndices[i]))
             {
-                SetCaptured(boxIndices[i], turnIndex);
+                SetCaptured(boxIndices[i], turnIndex, playCaptureAnimIfCaptured);
                 score[turnIndex] += 1;
                 capturedEitherBox = true;
             }
@@ -190,13 +201,17 @@ public class Bitboard
         return numConnections;
     }
 
-    private void SetCaptured(int boxIndex, int turnIndex)
+    private void SetCaptured(int boxIndex, int turnIndex, 
+        bool playCaptureAnimIfCaptured)
     {
         boxes[boxIndex] |= (1 << (int)BitIndex.Captured);
-        Vector2 boxCoord = GetBoxCoordFromBoxIndex(boxIndex);
-        Vector3 boxCoordAndCapturedBy = new Vector3(
-            boxCoord.x, boxCoord.y, turnIndex);
-        GameManagerBitboard.Instance.CaptureBox(boxCoordAndCapturedBy);
+        if (playCaptureAnimIfCaptured)
+        {
+            Vector2 boxCoord = GetBoxCoordFromBoxIndex(boxIndex);
+            Vector3 boxCoordAndCapturedBy = new Vector3(
+                boxCoord.x, boxCoord.y, turnIndex);
+            GameManagerBitboard.Instance.CaptureBox(boxCoordAndCapturedBy);
+        }
     }
 
     private void SetBoxOwner(int boxIndex, int turnIndex)
