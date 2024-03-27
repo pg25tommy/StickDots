@@ -19,6 +19,7 @@ public class GridGenerator : MonoBehaviour
     private List<GameObject> _gridPoints = new List<GameObject>();
     private Camera _mainCamera;
     private CameraController _cameraController;
+    private Bounds _bounds;
 
     private void Awake()
     {
@@ -76,6 +77,7 @@ public class GridGenerator : MonoBehaviour
         }
 
         _topRightPoint = _gridPoints[_gridPoints.Count - 1].transform.position;
+        _bounds.Encapsulate(_topRightPoint);
     }
 
     public void GenerateBackgroundBoxes()
@@ -100,15 +102,20 @@ public class GridGenerator : MonoBehaviour
         }
     }
 
+    // Method that finds the camera controller and sets the starting location, min/max zoom, and movement restrictions of the camera
     public void SetCamera()
     {
+        if (_mainCamera == null) _mainCamera = Camera.main;
+
         _mainCamera.transform.position = Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f);
         _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, -5f);
 
         // TODO: Change to set camera size by bounds 
         _mainCamera.orthographicSize = _gridX / _mainCamera.aspect;
 
-        _cameraController.SetCamera(10.0f, Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f),1.5f, 10.0f);
+        if (_cameraController == null) _cameraController = FindFirstObjectByType<CameraController>();
+
+        _cameraController.SetCamera(10.0f, Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f),1.5f, _bounds.size.x);
     }
 }
 
