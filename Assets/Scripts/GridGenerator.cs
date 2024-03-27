@@ -31,7 +31,11 @@ public class GridGenerator : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        // Get the main camera
         _mainCamera = FindFirstObjectByType<Camera>();
+
+        // Get the camera controller
         _cameraController = FindFirstObjectByType<CameraController>();
     }
 
@@ -52,6 +56,7 @@ public class GridGenerator : MonoBehaviour
         SetCamera();
     }
 
+    // Builds the grid, where _gridX is the number of dots wide, and _gridY is the number of dots tall
     public void GenerateGrid()
     {
         GameObject Dots = new GameObject("Dots");
@@ -76,6 +81,7 @@ public class GridGenerator : MonoBehaviour
             }
         }
 
+        // Gets the vector of the dot that opposes the origin and creates the bounding box size
         _topRightPoint = _gridPoints[_gridPoints.Count - 1].transform.position;
         _bounds.Encapsulate(_topRightPoint);
     }
@@ -105,17 +111,20 @@ public class GridGenerator : MonoBehaviour
     // Method that finds the camera controller and sets the starting location, min/max zoom, and movement restrictions of the camera
     public void SetCamera()
     {
+        // Null check for the camera
         if (_mainCamera == null) _mainCamera = Camera.main;
 
+        // Moves the camera to the center of the grid
         _mainCamera.transform.position = Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f);
+
+        // Moves the camera backwards on the z axis to ensure the grid is visible
         _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, -5f);
 
-        // TODO: Change to set camera size by bounds 
-        _mainCamera.orthographicSize = _gridX / _mainCamera.aspect;
-
+        // Null check for the camera controller
         if (_cameraController == null) _cameraController = FindFirstObjectByType<CameraController>();
 
-        _cameraController.SetCamera(10.0f, Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f),1.5f, _bounds.size.x);
+        // Add specified starting size, zoom values, starting position, and movement restrictions of the camera
+        _cameraController.SetCamera(_bounds.size.x, Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f),1.5f, _bounds.size.x);
     }
 }
 
