@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -80,36 +81,37 @@ public class GameManager : MonoBehaviour
     public void AIsMove()
     {
         Tuple<Vector2, Vector2> chosenLine = null;
-        if (_board.AvailableLines.Count >= (int)_numOfLinesTotal / 2)
-        {
-            // Complete the box if any
-            if (_board.LastLineForBoxesWithThreeConnections.Any())
-            {
-                chosenLine = _board.LastLineForBoxesWithThreeConnections.Dequeue();
-            }
-            else
-            {
-                // Otherwise randomly choose
-                for (int i = 0; i < 10; i++)
-                {
-                    var randomLine = _board.AvailableLines.ElementAt(
-                        _randomizer.Next(_board.AvailableLines.Count));
+        //if (_board.AvailableLines.Count >= (int)_numOfLinesTotal / 2)
+        //{
+        //    // Complete the box if any
+        //    if (_board.LastLineForBoxesWithThreeConnections.Any())
+        //    {
+        //        chosenLine = _board.LastLineForBoxesWithThreeConnections.Dequeue();
+        //    }
+        //    else
+        //    {
+        //        // Otherwise randomly choose
+        //        for (int i = 0; i < 10; i++)
+        //        {
+        //            var randomLine = _board.AvailableLines.ElementAt(
+        //                _randomizer.Next(_board.AvailableLines.Count));
 
-                    // Check connections but don't connect the lines yet
-                    int[] numConnections = _board.CheckBothBoxConnections(
-                        false, _aIsTurn, randomLine, false);
+        //            // Check connections but don't connect the lines yet
+        //            int[] numConnections = _board.CheckBothBoxConnections(
+        //                false, _aIsTurn, randomLine, false);
 
-                    if (numConnections[0] < 2 && numConnections[1] < 2)
-                    {
-                        chosenLine = randomLine;
-                        break;
-                    }
-                }
-            }
-        }
+        //            if (numConnections[0] < 2 && numConnections[1] < 2)
+        //            {
+        //                chosenLine = randomLine;
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
         if (chosenLine == null)
         {
+            //chosenLine = MinMax.RunMultithread(_board);
             (_, chosenLine) = MinMax.getScore(_board, 10, -100000, 100000, _aIsTurn);
         }
         _nextTurnIndex = _board.MakeMove(chosenLine, _aIsTurn, true);

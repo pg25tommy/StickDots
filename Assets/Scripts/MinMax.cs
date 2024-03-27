@@ -1,11 +1,54 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class MinMax
 {
     const int AITurnIndex = 1;
+
+    //public static Tuple<Vector2, Vector2> RunMultithread(Board board)
+    //{
+    //    float[] scores = new float[board.AvailableLines.Count];
+    //    Thread[] threads = new Thread[board.AvailableLines.Count];
+    //    int index = 0;
+    //    foreach (var line in board.AvailableLines)
+    //    {
+    //        var lineCopy = line;
+    //        Board nextBoardState = new Board(board);
+    //        int nextTurnIndex = nextBoardState.MakeMove(lineCopy, AITurnIndex, false);
+
+    //        Thread myThread = new Thread(() => (scores[index], _) = getScore(
+    //            nextBoardState, 
+    //            10, 
+    //            -100000, 
+    //            100000, 
+    //            nextTurnIndex));
+
+    //        myThread.Start();
+    //        threads[index] = myThread;
+    //    }
+
+    //    foreach (var thread in threads)
+    //    {
+    //        thread.Join();
+    //    }
+
+    //    float bestScore = -10000;
+    //    Tuple<Vector2, Vector2> bestLine = null;
+    //    int n = 0;
+    //    foreach(var line in board.AvailableLines)
+    //    {
+    //        if (scores[n] > bestScore)
+    //        {
+    //            bestScore = scores[n];
+    //            bestLine = line;
+    //        }
+    //        n++;
+    //    }
+    //    return bestLine;
+    //}
 
     public static (float, Tuple<Vector2, Vector2>) getScore(
         Board currentBoardState,
@@ -41,11 +84,12 @@ public class MinMax
         HashSet<Tuple<Vector2, Vector2>> availableLines =
             currentBoardState.AvailableLines;
 
+        Board nextBoardState;
         foreach (var line in availableLines)
         {
             //// Use copy constructor to create a new board for
             //// minmax score calculation
-            Board nextBoardState = new Board(currentBoardState);
+            nextBoardState = new Board(currentBoardState);
             int nextTurnIndex = nextBoardState.MakeMove(line, currentTurnIndex, false);
 
             (float nextMoveScore, var _) = getScore(
