@@ -58,9 +58,37 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8558894590637163729, guid: 9e1e49c4760aeca4fa86f751760d0919, type: 3}
+        m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+        m_MethodName: OnDrag
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 20a0e43e-db39-4c08-a435-4dbd1403ff00
     m_ActionName: 'CameraMovement/Drag[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f33d0572-05be-4c9e-9d06-5d8b3e8f2336
+    m_ActionName: CameraMovement/PrimaryFingerPosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2b0079de-9e04-4c67-b68d-8116eda76b48
+    m_ActionName: CameraMovement/SecondaryFingerPosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6c604764-9d37-4f6b-835c-90d9caf3c58c
+    m_ActionName: CameraMovement/PrimaryTouchContact
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f548499b-38b0-4c18-a4fe-bc1a4bdd1aa0
+    m_ActionName: CameraMovement/SecondaryTouchContact
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: CameraMovement

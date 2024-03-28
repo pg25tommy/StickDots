@@ -129,7 +129,7 @@ public class GridGenerator : MonoBehaviour
             1.5f, 
             _bounds.size.x,
             new Vector3(_gridOrigin.x - (_distance / 2), _gridOrigin.y - (_distance / 2), _mainCamera.transform.position.z),
-            new Vector3(_topRightPoint.x - (_distance / 2), _topRightPoint.y - (_distance / 2), _mainCamera.transform.position.z);
+            new Vector3(_topRightPoint.x + (_distance / 2), _topRightPoint.y + (_distance / 2), _mainCamera.transform.position.z));
     }
 }
 

@@ -109,7 +109,32 @@ public class CameraController : MonoBehaviour
         _difference = GetMousePosition() - transform.position;
         transform.position = _origin - _difference;
 
-        // TODO: Restrict movement to within a certain boundary
+        // Restricts the camera movement by vector values
+
+        // Left
+        if (transform.position.x < _minXY.x)
+        {
+            transform.position = new Vector3(_minXY.x, transform.position.y, transform.position.z);
+        }
+
+        // Right
+        if (transform.position.x > _maxXY.x)
+        {
+            transform.position = new Vector3(_maxXY.x, transform.position.y, transform.position.z);
+        }
+
+        // Bottom
+        if (transform.position.y < _minXY.y)
+        {
+            transform.position = new Vector3(transform.position.x, _minXY.y, transform.position.z);
+        }
+
+        // Top
+        if (transform.position.y > _maxXY.y)
+        {
+            transform.position = new Vector3(transform.position.x, _maxXY.y, transform.position.z);
+        }
+
     }
 
     //Method that retrieves the current mouse position
@@ -135,5 +160,7 @@ public class CameraController : MonoBehaviour
         // Minimum and maximum XY values for camera movement
         _minXY = minXY;
         _maxXY = maxXY;
+
+
     }
 }
