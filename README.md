@@ -35,7 +35,7 @@ For those looking to practice or play solo, StickDots includes AI Players of var
 ---------------------------------------
 
 <p align="center">
-  <img src="https://github.com/AmirJahan/StickDots/blob/main/Images/sample_paper.png" width="350" title="hover text">
+  <img src="https://github.com/AmirJahan/StickDots/assets/144267739/b79e403e-481b-4c33-afb2-d378986c6d0c" width="350" title="hover text">
 </p>
 
 ---------------------------------------
