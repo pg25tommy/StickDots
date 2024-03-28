@@ -18,6 +18,10 @@ public class CameraController : MonoBehaviour
     private float _minZoom = 1.5f;
     private float _maxZoom;
 
+    // XY boundary for camera position
+    Vector3 _minXY;
+    Vector3 _maxXY;
+
     private Coroutine _zoomCoroutine;
 
     [SerializeField] private float _cameraSpeed = 4f;
@@ -104,6 +108,8 @@ public class CameraController : MonoBehaviour
         
         _difference = GetMousePosition() - transform.position;
         transform.position = _origin - _difference;
+
+        // TODO: Restrict movement to within a certain boundary
     }
 
     //Method that retrieves the current mouse position
@@ -118,12 +124,16 @@ public class CameraController : MonoBehaviour
     }
 
     // Method that sets the beginning size, beginning position, min zoom, max zoom, and movement restrictions of the camera
-    public void SetCamera(float startSize, Vector3 startPos, float minZoom, float maxZoom)
+    public void SetCamera(float startSize, Vector3 startPos, float minZoom, float maxZoom, Vector2 minXY, Vector2 maxXY)
     {
         _mainCamera.orthographicSize = startSize;
         _mainCamera.transform.position = startPos;
         _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, -5f);
         _minZoom = minZoom;
         _maxZoom = maxZoom;
+
+        // Minimum and maximum XY values for camera movement
+        _minXY = minXY;
+        _maxXY = maxXY;
     }
 }

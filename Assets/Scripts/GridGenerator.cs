@@ -124,7 +124,12 @@ public class GridGenerator : MonoBehaviour
         if (_cameraController == null) _cameraController = FindFirstObjectByType<CameraController>();
 
         // Add specified starting size, zoom values, starting position, and movement restrictions of the camera
-        _cameraController.SetCamera(_bounds.size.x, Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f),1.5f, _bounds.size.x);
+        _cameraController.SetCamera(_bounds.size.x, 
+            Vector3.Lerp(_gridOrigin, _topRightPoint, 0.5f),
+            1.5f, 
+            _bounds.size.x,
+            new Vector3(_gridOrigin.x - (_distance / 2), _gridOrigin.y - (_distance / 2), _mainCamera.transform.position.z),
+            new Vector3(_topRightPoint.x - (_distance / 2), _topRightPoint.y - (_distance / 2), _mainCamera.transform.position.z);
     }
 }
 
