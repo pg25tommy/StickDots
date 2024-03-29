@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GamePlayManager : MonoBehaviour
@@ -47,16 +48,21 @@ public class GamePlayManager : MonoBehaviour
             {
                 GameObject playerObject = Instantiate(playerPrefab);
                 playerObject.transform.parent = playerContainer.transform;
+                playerObject.name = $"player {i +1}";
+                playerObject.GetComponentInChildren<TextMeshProUGUI>().text = playerObject.name;
                 players[i] = playerObject.AddComponent<Player>();
                 players[i].GetComponent<Player>().playerIndex = i;
                 players[i].GetComponent<Player>().myColor = playerDatas[i].myColor;
                 Debug.Log(players[i].GetComponent<Player>().myColor);
             }
         }
+
+        playerContainer.GetComponent<PlayerContainer>().InitAvatorList(playerCount);
     }
     void StartTurn()
     {
         players[currentPlayerIndex].BeginTurn();
+        Timer.Instance.StartTimer();
     }
 
     public void EndTurn()
@@ -70,7 +76,8 @@ public class GamePlayManager : MonoBehaviour
     public void NextTurn()
     {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerCount;
-
+        
+        playerContainer.GetComponent<PlayerContainer>().rotateAvator();
         StartTurn();
     }
 }

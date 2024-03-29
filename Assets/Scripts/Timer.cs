@@ -6,25 +6,25 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] private Image uiFill;
     [SerializeField] public TextMeshProUGUI timerText;
-    [SerializeField] public Button[] timerButtons;
     [SerializeField] public AudioClip beepSound;
     [SerializeField] public float timeRemaining;
     [SerializeField] private float originalTime;
+    [SerializeField] private int TimeForEachTurn;
     [SerializeField] private bool isRunning = false;
+    public static Timer Instance { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
-        foreach (Button button in timerButtons)
-        {
-            button.onClick.AddListener(delegate { StartTimer(button); });
-        }
-        Begin();
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
     }
 
-    private void Begin()
-    {
-        originalTime = timeRemaining;
-    }
+    //private void Start()
+    //{
+    //    StartTimer();
+    //}
 
     private void Update()
     {
@@ -35,8 +35,7 @@ public class Timer : MonoBehaviour
 
             if (timeRemaining <= 0)
             {
-                Debug.Log("Time's up!");
-                isRunning = false;
+                GamePlayManager.Instance.NextTurn();
             }
             else
             {
@@ -54,16 +53,13 @@ public class Timer : MonoBehaviour
         }
     }
 
-    private void StartTimer(Button button)
+    public void StopTimer()
     {
-        int seconds = 0;
-        if (button.name == "30SecButton")
-            seconds = 30;
-        else if (button.name == "60SecButton")
-            seconds = 60;
-        else if (button.name == "90SecButton")
-            seconds = 90;
-
+        isRunning = false;
+    }
+    public void StartTimer()
+    {
+        int seconds = TimeForEachTurn;
         timeRemaining = seconds;
         originalTime = timeRemaining;
         isRunning = true;

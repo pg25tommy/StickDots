@@ -37,7 +37,7 @@ public class BoxComplete : MonoBehaviour
     {
         // Width in GameManager stores num of dots
         // For box need to -1
-        col = GameManager.Instance.W - 1;
+        col = 4;//GameManager.Instance.W - 1;
         blingMode = false;
         ResetBling();
     }
