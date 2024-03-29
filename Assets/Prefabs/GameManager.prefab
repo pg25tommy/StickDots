@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085692f8c60c54e4abff3b8fa4663799, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _lineRendererPrefab: {fileID: 5017993199911747139, guid: b2f234a7cb42bb144b0b4fe3932de450, type: 3}
-  newLine: 0
+  _LineDrawablePrefab: {fileID: 3126319451227240524, guid: cef9e070a88da1749b6ff11692d1ee5f, type: 3}
+  _LineStaticPrefab: {fileID: 3126319451227240524, guid: cef9e070a88da1749b6ff11692d1ee5f, type: 3}
 --- !u!114 &575275455836440032
 MonoBehaviour:
   m_ObjectHideFlags: 0
