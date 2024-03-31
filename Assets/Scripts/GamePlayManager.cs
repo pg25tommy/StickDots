@@ -1,17 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GamePlayManager : MonoBehaviour
 {
-    [SerializeField] PlayerData[] playerDatas;
+    [SerializeField] private int _h = 4;
+    [SerializeField] private int _w = 4;
+    [SerializeField] public PlayerColor[] playerColor;
     [SerializeField] GameObject playerPrefab;
     [SerializeField] private GameObject playerContainer;
-    [HideInInspector] public Player[] players;
+    public Player[] players;
     public int currentPlayerIndex { get; private set; } = 0;
     public static GamePlayManager Instance { get; private set; }
-    private int playerCount = 5;
+    private int playerCount;
+    private Board _board;
+    [SerializeField] private UnityEvent<Vector3> _boxCapturedEvent;
+
+    public int PlayersCount => playerCount;
+    public int H => _h;
+    public int W => _w;
 
     private void Awake()
     {
@@ -24,6 +34,7 @@ public class GamePlayManager : MonoBehaviour
     {
         InitailizePlayers();
         StartTurn();
+        _board = new Board(_h, _w);
     }
     void Update()
     {
@@ -39,7 +50,7 @@ public class GamePlayManager : MonoBehaviour
     void InitailizePlayers()
     {
         Debug.Log("InitailizePlayers");
-        playerCount = playerDatas.Length;
+        playerCount = playerColor.Length;
         players = new Player[playerCount];
         if (players.Length == 0) { return; }
         for (int i = 0; i < playerCount; i++)
@@ -52,7 +63,7 @@ public class GamePlayManager : MonoBehaviour
                 playerObject.GetComponentInChildren<TextMeshProUGUI>().text = playerObject.name;
                 players[i] = playerObject.AddComponent<Player>();
                 players[i].GetComponent<Player>().playerIndex = i;
-                players[i].GetComponent<Player>().myColor = playerDatas[i].myColor;
+                players[i].GetComponent<Player>().myColor = playerColor[i].myColor;
                 Debug.Log(players[i].GetComponent<Player>().myColor);
             }
         }
@@ -79,5 +90,35 @@ public class GamePlayManager : MonoBehaviour
         
         playerContainer.GetComponent<PlayerContainer>().rotateAvator();
         StartTurn();
+    }
+
+    public void PlayersMove(Vector2 p1, Vector2 p2)
+    {
+        Tuple<Vector2, Vector2> lineToConnect;
+        // If Vertical
+        if (p1.x == p2.x)
+        {
+            lineToConnect = p1.y > p2.y ?
+                Tuple.Create(p2, p1) : Tuple.Create(p1, p2);
+        }
+        else
+        {
+            lineToConnect = p1.x > p2.x ?
+                Tuple.Create(p2, p1) : Tuple.Create(p1, p2);
+        }
+        int nextTurnIndex = _board.MakeMove(lineToConnect, currentPlayerIndex, true);
+        if (nextTurnIndex != currentPlayerIndex)
+        {
+            NextTurn();
+        }
+        else
+        {
+            StartTurn();
+        }
+    }
+
+    public void CaptureBox(Vector3 boxCoordAndCapturedBy)
+    {
+        _boxCapturedEvent.Invoke(boxCoordAndCapturedBy);
     }
 }

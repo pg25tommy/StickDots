@@ -101,8 +101,8 @@ public class LineController : MonoBehaviour
                     MakeLine(_dotPositions[0], _dotPositions[1]);
 
 
-                    Debug.Log($"Human: {_p1}, {_p2}");
-                    GameManager.Instance.PlayersMove(_p1, _p2);
+                    Debug.Log($"Player{GamePlayManager.Instance.currentPlayerIndex}: {_p1}, {_p2}");
+                    GamePlayManager.Instance.PlayersMove(_p1, _p2);
 
                     //hide lineDrawable if creating new line
                     _LineDrawable.SetActive(false);

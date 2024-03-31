@@ -14,13 +14,12 @@ public class BoxComplete : MonoBehaviour
 {
     private List<GameObject> boxBackgrounds = new List<GameObject>();
 
-    [SerializeField] private Material blueColor;
-    [SerializeField] private Material redColor;
-    [SerializeField] private Material activeColor;
+    private Material activeColor;
+    [SerializeField] private Shader completionShader;
 
 
     private int col;
-    private PlayerColour winPlayer;
+    private int winPlayer;
     //[SerializeField] Player winPlayer;
     //[SerializeField] int col;
     //[SerializeField] int x, y;
@@ -36,7 +35,7 @@ public class BoxComplete : MonoBehaviour
     {
         // Width in GameManager stores num of dots
         // For box need to -1
-        col = 4;//GameManager.Instance.W - 1;
+        col = GamePlayManager.Instance.W - 1;
         blingMode = false;
         ResetBling();
     }
@@ -47,47 +46,18 @@ public class BoxComplete : MonoBehaviour
         return x + (y * (col));
     }
 
-    //private void Start()
-    //{
-    //    //get the specific gameobject render by hash code
-    //    Renderer ren = boxes[getBoxHash(x, y)].gameObject.GetComponent<Renderer>();
-    //    //set
-    //    if (winPlayer == Player.player_blue)
-    //    {
-    //        activeColor = blueColor;
-    //    }
-    //    else if (winPlayer == Player.player_red)
-    //    {
-    //        activeColor = redColor;
-    //    }
-    //    //reset the bling offset
-    //    ResetBling();
-
-    //    //turn on bling
-    //    blingMode = true;
-
-    //    //set the material for the game object
-    //    ren.material = activeColor;
-    //}
-
     public void PlayCaptureBoxAnim(Vector3 boxCoordAndCapturedBy) 
     {
         int x = (int)boxCoordAndCapturedBy.x;
         int y = (int)boxCoordAndCapturedBy .y;
-        winPlayer = (PlayerColour)boxCoordAndCapturedBy.z;
+        winPlayer = (int)boxCoordAndCapturedBy.z;
         //get the specific gameobject render by hash code
         Renderer ren = boxBackgrounds[getBoxHash(x, y)].gameObject.GetComponent<Renderer>();
-        //set
-        if (winPlayer == PlayerColour.player_blue)
-        {
-            activeColor = blueColor;
-        }
-        else if (winPlayer == PlayerColour.player_red)
-        {
-            activeColor = redColor;
-        }
 
         ren.gameObject.SetActive(true);
+        activeColor = new Material(completionShader);
+        activeColor.SetColor("_baclgroundColor",
+            GamePlayManager.Instance.players[winPlayer].myColor);
         ren.material = activeColor;
         blingMode = true;
     }
@@ -95,24 +65,17 @@ public class BoxComplete : MonoBehaviour
     private void ResetBling()
     {
         blingMode = false;
-        //reset bling offset to 0
-        redColor.SetFloat("_HighLightOffset",0.0f);
-        blueColor.SetFloat("_HighLightOffset",0.0f);
     }
 
     private void Update()
     {
-        float offset = activeColor.GetFloat("_HighLightOffset");
         if (blingMode)
         {
-            //if it is blinging
-            //get the offset now and increase it by a rate
+            float offset = activeColor.GetFloat("_HighLightOffset");
             activeColor.SetFloat("_HighLightOffset", offset + Time.deltaTime/3.0f);
-            //Debug.Log(offset + Time.deltaTime / 3.0f);
-            //ResetBling();
+            if (offset >= 1.0f) ResetBling();
         }
 
-        if (offset >= 1.0f) ResetBling();
         
     }
 
