@@ -15,7 +15,9 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] public PlayerColor[] playerColor;
     [SerializeField] GameObject playerPrefab;
     [SerializeField] private GameObject playerContainer;
+    [SerializeField] private TextMeshProUGUI currentPlayerName;
     public Player[] players;
+    public Player[] playersInSession;
     public int currentPlayerIndex { get; private set; } = 0;
     public static GamePlayManager Instance { get; private set; }
     private int playerCount;
@@ -97,10 +99,11 @@ public class GamePlayManager : MonoBehaviour
             _w = 8;
         }
         InitailizePlayers();
-        StartTurn();
-        _board = new Board(_h, _w);
-        GridGenerator.Instance.CreateBoard();
-        LineController.Instance.CreateLineDrawing();
+        ChangePlayerInfo();
+        //StartTurn();
+        //_board = new Board(_h, _w);
+        //GridGenerator.Instance.CreateBoard();
+        //LineController.Instance.CreateLineDrawing();
     }
 
     void InitailizePlayers()
@@ -126,10 +129,79 @@ public class GamePlayManager : MonoBehaviour
 
         playerContainer.GetComponent<PlayerContainer>().InitAvatorList(playerCount);
     }
+
+
+    #region Collecting Player Info
+
+    private int currentPlayerInfoIndex = 0;
+
+    public TMP_InputField playerNameInputField;
+    public GameObject colorPickerPanel;
+    public TMP_Text promptText;
+
+    private Color selectedColor = Color.white;
+
+    public Slider redSlider;
+    public Slider greenSlider;
+    public Slider blueSlider;
+
+    public Image currentColor;
+
+    void ChangePlayerInfo()
+    {
+        if (currentPlayerInfoIndex < playerCount)
+        {
+            promptText.text = $"Player {currentPlayerInfoIndex + 1}: Type your player name";
+
+            // Clear the name input field
+            playerNameInputField.text = "";
+            playerNameInputField.gameObject.SetActive(true);
+            colorPickerPanel.SetActive(false);
+            currentPlayerInfoIndex++;
+        }
+        else
+        {
+            // Start turn when all info has been entered
+            StartTurn();
+            _board = new Board(_h, _w);
+            GridGenerator.Instance.CreateBoard();
+            LineController.Instance.CreateLineDrawing();
+        }
+    }
+
+    public void OnNameEntered()
+    {
+        string playerName = playerNameInputField.text;
+        playerNameInputField.gameObject.SetActive(false);
+        promptText.text = "Choose your player color";
+        colorPickerPanel.SetActive(true);
+    }
+
+    public void OnColorChanged()
+    {
+        currentColor.color = new Color(redSlider.value, greenSlider.value, blueSlider.value);
+    }
+
+    public void OnColorSelected()
+    {
+        selectedColor = new Color(redSlider.value, greenSlider.value, blueSlider.value);
+
+        players[currentPlayerInfoIndex - 1].playerName = playerNameInputField.text;
+        players[currentPlayerInfoIndex - 1].myColor = selectedColor;
+
+        colorPickerPanel.SetActive(false);
+
+        // Continue to colect the other player's info
+        ChangePlayerInfo();
+    }
+
+    #endregion
+
     void StartTurn()
     {
         players[currentPlayerIndex].BeginTurn();
         Timer.Instance.StartTimer();
+        currentPlayerName.text = players[currentPlayerIndex].playerName.ToString();
     }
 
     public void EndTurn()
