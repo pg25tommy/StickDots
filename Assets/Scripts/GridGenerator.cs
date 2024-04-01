@@ -41,16 +41,21 @@ public class GridGenerator : MonoBehaviour
 
     private void OnValidate()
     {
-        _boxCompleteScript = FindFirstObjectByType<BoxComplete>();
-        _boxBackgroundsParent = _boxCompleteScript.transform;
+
     }
 
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+
+    public void CreateBoard()
+    {
         _gridX = GamePlayManager.Instance.W;
         _gridY = GamePlayManager.Instance.H;
-
+        _boxCompleteScript = FindFirstObjectByType<BoxComplete>();
+        _boxBackgroundsParent = _boxCompleteScript.transform;
         GenerateGrid();
         GenerateBackgroundBoxes();
         SetCamera();

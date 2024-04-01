@@ -34,6 +34,12 @@ public class LineController : MonoBehaviour
 
     private void Start()
     {
+
+
+    }
+
+    public void CreateLineDrawing()
+    {
         _lineParent = new GameObject("LineDrawings");
 
         //instantiate lineDrawable
@@ -43,7 +49,6 @@ public class LineController : MonoBehaviour
             _lineDrawableSpriteController = _LineDrawable.GetComponent<LineSpriteController>();
             _LineDrawable.SetActive(false);
         }
-
     }
 
     // call on finger touch event

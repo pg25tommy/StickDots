@@ -1,9 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mail;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GamePlayManager : MonoBehaviour
 {
@@ -18,6 +21,7 @@ public class GamePlayManager : MonoBehaviour
     private int playerCount;
     private Board _board;
     [SerializeField] private UnityEvent<Vector3> _boxCapturedEvent;
+    public int size;
 
     public int PlayersCount => playerCount;
     public int H => _h;
@@ -25,17 +29,37 @@ public class GamePlayManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    // called second
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("OnSceneLoaded: " + scene.name);
+        if (scene.name == "04_Local_Multiplayer")
+            CreateBoardOfSize();
+    }
+
+
     void Start()
     {
-        InitailizePlayers();
-        StartTurn();
-        _board = new Board(_h, _w);
+        
+        
+        
     }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -47,6 +71,38 @@ public class GamePlayManager : MonoBehaviour
             EndTurn();
         }
     }
+
+    public void SetBoardSize(int value)
+    {
+        size = value;
+    }
+    
+    public void CreateBoardOfSize()
+    {
+        Transform a = FindFirstObjectByType<UIManager>().transform;
+        playerContainer = a.GetChild(2).gameObject;
+        if (size == 1)
+        {
+            _h = 4; 
+            _w = 4;
+        }
+        else if (size == 2)
+        {
+            _h = 6;
+            _w = 6;
+        }
+        else if (size == 3)
+        {
+            _h = 8;
+            _w = 8;
+        }
+        InitailizePlayers();
+        StartTurn();
+        _board = new Board(_h, _w);
+        GridGenerator.Instance.CreateBoard();
+        LineController.Instance.CreateLineDrawing();
+    }
+
     void InitailizePlayers()
     {
         Debug.Log("InitailizePlayers");
