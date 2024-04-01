@@ -14,6 +14,14 @@ public class CameraController : MonoBehaviour
     //Reference of the camera
     private Camera _mainCamera;
 
+    // How far 
+    private float _minZoom = 1.5f;
+    private float _maxZoom;
+
+    // XY boundary for camera position
+    Vector3 _minXY;
+    Vector3 _maxXY;
+
     private Coroutine _zoomCoroutine;
 
     [SerializeField] private float _cameraSpeed = 4f;
@@ -69,12 +77,12 @@ public class CameraController : MonoBehaviour
         {
             distance = Vector2.Distance(_controls.CameraMovement.PrimaryFingerPosition.ReadValue<Vector2>(), _controls.CameraMovement.SecondaryFingerPosition.ReadValue<Vector2>());
 
-            if (distance > previousDistance && _mainCamera.orthographicSize > 2.0f)
+            if (distance > previousDistance && _mainCamera.orthographicSize > _minZoom)
             {
                 _mainCamera.orthographicSize -= Time.deltaTime * _cameraSpeed;
             }
 
-            else if(distance < previousDistance && _mainCamera.orthographicSize < 10.0f)
+            else if(distance < previousDistance && _mainCamera.orthographicSize < _maxZoom)
             {
                 _mainCamera.orthographicSize += Time.deltaTime * _cameraSpeed;
             }
@@ -100,6 +108,33 @@ public class CameraController : MonoBehaviour
         
         _difference = GetMousePosition() - transform.position;
         transform.position = _origin - _difference;
+
+        // Restricts the camera movement by vector values
+
+        // Left
+        if (transform.position.x < _minXY.x)
+        {
+            transform.position = new Vector3(_minXY.x, transform.position.y, transform.position.z);
+        }
+
+        // Right
+        if (transform.position.x > _maxXY.x)
+        {
+            transform.position = new Vector3(_maxXY.x, transform.position.y, transform.position.z);
+        }
+
+        // Bottom
+        if (transform.position.y < _minXY.y)
+        {
+            transform.position = new Vector3(transform.position.x, _minXY.y, transform.position.z);
+        }
+
+        // Top
+        if (transform.position.y > _maxXY.y)
+        {
+            transform.position = new Vector3(transform.position.x, _maxXY.y, transform.position.z);
+        }
+
     }
 
     //Method that retrieves the current mouse position
@@ -110,6 +145,22 @@ public class CameraController : MonoBehaviour
         MousePos.z = 1;
 
         return _mainCamera.ScreenToWorldPoint(MousePos);
+
+    }
+
+    // Method that sets the beginning size, beginning position, min zoom, max zoom, and movement restrictions of the camera
+    public void SetCamera(float startSize, Vector3 startPos, float minZoom, float maxZoom, Vector2 minXY, Vector2 maxXY)
+    {
+        _mainCamera.orthographicSize = startSize;
+        _mainCamera.transform.position = startPos;
+        _mainCamera.transform.position = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y, -5f);
+        _minZoom = minZoom;
+        _maxZoom = maxZoom;
+
+        // Minimum and maximum XY values for camera movement
+        _minXY = minXY;
+        _maxXY = maxXY;
+
 
     }
 }

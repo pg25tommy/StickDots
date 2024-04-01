@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7246004831788920610}
   - component: {fileID: 1837568569817115103}
   - component: {fileID: 8558894590637163729}
-  - component: {fileID: 6017495160918295881}
+  - component: {fileID: -8860608012984692423}
   m_Layer: 0
   m_Name: GameCamera
   m_TagString: MainCamera
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraSpeed: 4
---- !u!114 &6017495160918295881
+--- !u!114 &-8860608012984692423
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
