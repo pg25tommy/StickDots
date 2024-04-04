@@ -11,7 +11,7 @@ public class Board
     // Num of dots on horizontal axis
     private int width;
 
-    private float[] score = { 0, 0 };
+    private float[] score;
 
     private Box[][] boxes;
 
@@ -34,6 +34,7 @@ public class Board
 
     public Board(int h, int w)
     {
+        score = new float[GamePlayManager.Instance.PlayersCount];
         height = h;
         width = w;
         boxes = new Box[width - 1][];
@@ -46,7 +47,10 @@ public class Board
     {
         height = originalBoardState.height;
         width = originalBoardState.width;
-        score = new[] { originalBoardState.score[0], originalBoardState.score[1] };
+        for (int i = 0; i < originalBoardState.score.Length; i++)
+        {
+            score[i] = originalBoardState.score[i];
+        }
         boxes = new Box[width - 1][];
         boxes = InitializeBoxes(originalBoardState.boxes);
 
@@ -124,9 +128,9 @@ public class Board
         if (captured)
             score[turnIndex] += 1;
 
-        // Flip the index if the person making the move didn't capture a box
+        // Change the index if the person making the move didn't capture a box
         if (!captured)
-            turnIndex = 1 - turnIndex;
+            turnIndex = (turnIndex + 1) % GamePlayManager.Instance.PlayersCount;
 
         return turnIndex;
     }
@@ -185,7 +189,7 @@ public class Board
                 Vector3 boxCoordAndCapturedBy = isHorizontal ?
                     new Vector3(firstDotX, i, turnIndex) :
                     new Vector3(i, firstDotY, turnIndex);
-                GameManager.Instance.CaptureBox(boxCoordAndCapturedBy);
+                GamePlayManager.Instance.CaptureBox(boxCoordAndCapturedBy);
             }
 
             index++;

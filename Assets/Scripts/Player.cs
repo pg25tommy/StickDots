@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
 
     public void BeginTurn()
     {
-        Debug.Log("MyColor   " + myColor);
         isTurnActive = true;
         UIManager.Instance.IndicatorColorSwitch(myColor);
     }

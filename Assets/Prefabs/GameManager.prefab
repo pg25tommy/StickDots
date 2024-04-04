@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &6946819895297504106
+--- !u!1 &8346012913508034521
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,11 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5604965045356236957}
-  - component: {fileID: 740724729530838710}
-  - component: {fileID: 575275455836440032}
-  - component: {fileID: 2267865735064433497}
+  - component: {fileID: 7503299256806860460}
+  - component: {fileID: 1814389113998125914}
+  - component: {fileID: 2370969270049080523}
+  - component: {fileID: 6046626344044852419}
+  - component: {fileID: 309983391670929118}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -19,13 +20,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5604965045356236957
+--- !u!4 &7503299256806860460
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6946819895297504106}
+  m_GameObject: {fileID: 8346012913508034521}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -34,52 +35,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &740724729530838710
+--- !u!114 &1814389113998125914
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6946819895297504106}
+  m_GameObject: {fileID: 8346012913508034521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 085692f8c60c54e4abff3b8fa4663799, type: 3}
+  m_Script: {fileID: 11500000, guid: e6018405a9d9c8f4cae9d7279c39e176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _LineDrawablePrefab: {fileID: 3126319451227240524, guid: cef9e070a88da1749b6ff11692d1ee5f, type: 3}
-  _LineStaticPrefab: {fileID: 3126319451227240524, guid: cef9e070a88da1749b6ff11692d1ee5f, type: 3}
---- !u!114 &575275455836440032
+  _gameEventAsset: {fileID: 11400000, guid: 637232729a5365c4fbd6d9da534021af, type: 2}
+  _useFilter: 0
+  _filterValues: 
+  OnGameEventInvoked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2370969270049080523}
+        m_TargetAssemblyTypeName: GamePlayManager, Assembly-CSharp
+        m_MethodName: CreateBoardOfSize
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2370969270049080523
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6946819895297504106}
+  m_GameObject: {fileID: 8346012913508034521}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14523ddf889ed4b498be96d5f6dfa061, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _drawPointPrefab: {fileID: 1098490563627684600, guid: 32c1b6c13e51c854dbb0b17307b4184f, type: 3}
-  _boxBackgroundPrefab: {fileID: 833318340284404113, guid: 0a9fa5fcc1d51c549987969e3c95d504, type: 3}
-  _distance: 1
---- !u!114 &2267865735064433497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6946819895297504106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5c9d8b6b44e5104cb5440ca477f4e92, type: 3}
+  m_Script: {fileID: 11500000, guid: 4ede7171b0aebdd4bbb255b770e8d00d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _h: 4
   _w: 4
-  _playersTurn: 0
-  _aIsTurn: 1
-  _nextTurnIndex: 1
+  playerColor:
+  - myColor: {r: 1, g: 0, b: 0, a: 0}
+  - myColor: {r: 1, g: 0, b: 0.97479534, a: 0}
+  - myColor: {r: 0.0023498535, g: 0, b: 1, a: 0}
+  - myColor: {r: 0.15044188, g: 1, b: 0, a: 0}
+  playerPrefab: {fileID: 8067434532505438874, guid: 93dca05360d261d4ca40a7d0d4206ea7, type: 3}
+  playerContainer: {fileID: 0}
+  players: []
   _boxCapturedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -96,3 +103,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6046626344044852419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346012913508034521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14523ddf889ed4b498be96d5f6dfa061, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _drawPointPrefab: {fileID: 1098490563627684600, guid: 32c1b6c13e51c854dbb0b17307b4184f, type: 3}
+  _boxBackgroundPrefab: {fileID: 833318340284404113, guid: 0a9fa5fcc1d51c549987969e3c95d504, type: 3}
+  _distance: 1
+--- !u!114 &309983391670929118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8346012913508034521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 085692f8c60c54e4abff3b8fa4663799, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _LineDrawablePrefab: {fileID: 3126319451227240524, guid: cef9e070a88da1749b6ff11692d1ee5f, type: 3}
+  _LineDrawable: {fileID: 0}
+  _LineStaticPrefab: {fileID: 3126319451227240524, guid: cef9e070a88da1749b6ff11692d1ee5f, type: 3}
