@@ -66,11 +66,11 @@ public class GamePlayManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            UIManager.Instance.IndicatorColorSwitch(players[currentPlayerIndex].myColor);
+            //UIManager.Instance.IndicatorColorSwitch(players[currentPlayerIndex].myColor);
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            EndTurn();
+            //EndTurn();
         }
     }
 
@@ -180,6 +180,9 @@ public class GamePlayManager : MonoBehaviour
     public void OnColorChanged()
     {
         currentColor.color = new Color(redSlider.value, greenSlider.value, blueSlider.value);
+        playerColor[currentPlayerIndex].myColor = currentColor.color;
+        players[currentPlayerInfoIndex - 1].myColor = currentColor.color;
+        players[currentPlayerInfoIndex - 1].GetComponentInChildren<Image>().color = currentColor.color;
     }
 
     public void OnColorSelected()
@@ -187,7 +190,7 @@ public class GamePlayManager : MonoBehaviour
         selectedColor = new Color(redSlider.value, greenSlider.value, blueSlider.value);
 
         players[currentPlayerInfoIndex - 1].playerName = playerNameInputField.text;
-        players[currentPlayerInfoIndex - 1].myColor = selectedColor;
+        playerColor[currentPlayerIndex].myColor = selectedColor;
 
         colorPickerPanel.SetActive(false);
 
