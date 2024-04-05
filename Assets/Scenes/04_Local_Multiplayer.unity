@@ -320,6 +320,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1923370675849637839, guid: 4ec33e4e468f7f34caa585ffc3addcfb, type: 3}
+      propertyPath: audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1a72460024e00d54ba447b609e8896d1, type: 3}
+    - target: {fileID: 1923370675849637839, guid: 4ec33e4e468f7f34caa585ffc3addcfb, type: 3}
       propertyPath: completionShader
       value: 
       objectReference: {fileID: -6465566751694194690, guid: f0b977e4af599564e974162049ebc278, type: 3}
@@ -555,8 +559,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2648851173630969989, guid: 1cfe162195b033147bf0776326efe67f, type: 3}
+      propertyPath: beepSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 92bc82be8a0b4454691d5c707e15f2a8, type: 3}
+    - target: {fileID: 2648851173630969989, guid: 1cfe162195b033147bf0776326efe67f, type: 3}
       propertyPath: TimeForEachTurn
-      value: 100
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2776449416303004346, guid: 1cfe162195b033147bf0776326efe67f, type: 3}
       propertyPath: m_Name
