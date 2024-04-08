@@ -23,6 +23,9 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] private UnityEvent<Vector3> _boxCapturedEvent;
     public int size;
 
+    [SerializeField] private AudioClip gameOverAudioClip;
+    private AudioSource audioSource;
+
     public int PlayersCount => playerCount;
     public int H => _h;
     public int W => _w;
@@ -39,6 +42,11 @@ public class GamePlayManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -52,14 +60,6 @@ public class GamePlayManager : MonoBehaviour
             CreateBoardOfSize();
     }
 
-
-    void Start()
-    {
-        
-        
-        
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -70,20 +70,27 @@ public class GamePlayManager : MonoBehaviour
         {
             EndTurn();
         }
+
+        if (_board != null && _board.AvailableLines.Count == 0)
+        {
+            Debug.Log("Game Over");
+
+            PlayGameOverAudio();
+        }
     }
 
     public void SetBoardSize(int value)
     {
         size = value;
     }
-    
+
     public void CreateBoardOfSize()
     {
         Transform a = FindFirstObjectByType<UIManager>().transform;
         playerContainer = a.GetChild(2).gameObject;
         if (size == 1)
         {
-            _h = 4; 
+            _h = 4;
             _w = 4;
         }
         else if (size == 2)
@@ -115,7 +122,7 @@ public class GamePlayManager : MonoBehaviour
             {
                 GameObject playerObject = Instantiate(playerPrefab);
                 playerObject.transform.parent = playerContainer.transform;
-                playerObject.name = $"player {i +1}";
+                playerObject.name = $"player {i + 1}";
                 playerObject.GetComponentInChildren<TextMeshProUGUI>().text = playerObject.name;
                 players[i] = playerObject.AddComponent<Player>();
                 players[i].GetComponent<Player>().playerIndex = i;
@@ -144,7 +151,7 @@ public class GamePlayManager : MonoBehaviour
     public void NextTurn()
     {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerCount;
-        
+
         playerContainer.GetComponent<PlayerContainer>().rotateAvator();
         StartTurn();
     }
@@ -177,5 +184,23 @@ public class GamePlayManager : MonoBehaviour
     public void CaptureBox(Vector3 boxCoordAndCapturedBy)
     {
         _boxCapturedEvent.Invoke(boxCoordAndCapturedBy);
+    }
+
+    private void PlayGameOverAudio()
+    {
+        if (gameOverAudioClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(gameOverAudioClip);
+        }
+    }
+
+    private T FindFirstObjectByType<T>() where T : MonoBehaviour
+    {
+        T result = FindObjectOfType<T>();
+        if (result == null)
+        {
+            Debug.LogError("No object of type " + typeof(T).Name + " found in the scene.");
+        }
+        return result;
     }
 }

@@ -685,6 +685,10 @@ PrefabInstance:
       propertyPath: playerContainer
       value: 
       objectReference: {fileID: 524327149}
+    - target: {fileID: 2370969270049080523, guid: 0ef8be15719737b49b38b9da9ee1d66b, type: 3}
+      propertyPath: gameOverAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 4ff159bfdb26b0e4db6e84cbcec0185f, type: 3}
     - target: {fileID: 7503299256806860460, guid: 0ef8be15719737b49b38b9da9ee1d66b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
