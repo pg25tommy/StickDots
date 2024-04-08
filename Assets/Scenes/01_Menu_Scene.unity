@@ -2687,7 +2687,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8346012913508034521, guid: 0ef8be15719737b49b38b9da9ee1d66b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666487611}
   m_SourcePrefab: {fileID: 100100000, guid: 0ef8be15719737b49b38b9da9ee1d66b, type: 3}
 --- !u!1 &1217531149
 GameObject:
@@ -3239,6 +3242,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1620293974}
   m_CullTransparentMesh: 1
+--- !u!1 &1666487610 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8346012913508034521, guid: 0ef8be15719737b49b38b9da9ee1d66b, type: 3}
+  m_PrefabInstance: {fileID: 1199288149}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1666487611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1666487610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e32350f7a9762234abb134242e538382, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundMusicClip: {fileID: 8300000, guid: f738c1b694f394044ad06ce06fca8171, type: 3}
 --- !u!1 &1769195860
 GameObject:
   m_ObjectHideFlags: 0

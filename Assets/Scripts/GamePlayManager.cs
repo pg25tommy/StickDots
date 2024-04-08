@@ -140,6 +140,7 @@ public class GamePlayManager : MonoBehaviour
 
         NextTurn();
     }
+
     public void NextTurn()
     {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerCount;
