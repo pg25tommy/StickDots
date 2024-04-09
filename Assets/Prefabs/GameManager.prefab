@@ -55,7 +55,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2370969270049080523}
         m_TargetAssemblyTypeName: GamePlayManager, Assembly-CSharp
-        m_MethodName: CreateBoardOfSize
+        m_MethodName: SetBoardSize
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -103,6 +103,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  size: 0
 --- !u!114 &6046626344044852419
 MonoBehaviour:
   m_ObjectHideFlags: 0
