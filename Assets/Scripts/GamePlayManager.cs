@@ -133,7 +133,7 @@ public class GamePlayManager : MonoBehaviour
 
     #region Collecting Player Info
 
-    private int currentPlayerInfoIndex = 0;
+    public int currentPlayerInfoIndex = 0;
 
     public TMP_InputField playerNameInputField;
     public GameObject colorPickerPanel;

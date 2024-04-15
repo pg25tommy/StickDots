@@ -14,6 +14,7 @@ public class LineController : MonoBehaviour
     [SerializeField] private GameObject _LineDrawablePrefab;
     [SerializeField] private GameObject _LineDrawable;
     [SerializeField] private GameObject _LineStaticPrefab;
+    GamePlayManager _gamePlayManager;
 
 
     //public Color validColor = Color.green;
@@ -34,8 +35,7 @@ public class LineController : MonoBehaviour
 
     private void Start()
     {
-
-
+        _gamePlayManager = FindAnyObjectByType<GamePlayManager>();
     }
 
     public void CreateLineDrawing()
@@ -47,6 +47,9 @@ public class LineController : MonoBehaviour
         {
             _LineDrawable = Instantiate(_LineDrawablePrefab);
             _lineDrawableSpriteController = _LineDrawable.GetComponent<LineSpriteController>();
+
+            //_LineDrawable.GetComponentInChildren<SpriteRenderer>().color = _gamePlayManager.players[_gamePlayManager.currentPlayerInfoIndex - 1].myColor;
+
             _LineDrawable.SetActive(false);
         }
     }
@@ -163,6 +166,7 @@ public class LineController : MonoBehaviour
         LineRenderer lineRenderer = Instantiate(_lineRendererPrefab, _lineParent.transform);
         */
         GameObject lineSprite = Instantiate(_LineStaticPrefab, _lineParent.transform);
+        lineSprite.GetComponentInChildren<SpriteRenderer>().color = _gamePlayManager.players[_gamePlayManager.currentPlayerIndex].myColor;
         //Vector3[] dotsToConnect = new Vector3[2];
         //dotsToConnect[0] = p1;
         //dotsToConnect[1] = p2;
