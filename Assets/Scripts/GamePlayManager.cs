@@ -141,11 +141,7 @@ public class GamePlayManager : MonoBehaviour
 
     private Color selectedColor = Color.white;
 
-    public Slider redSlider;
-    public Slider greenSlider;
-    public Slider blueSlider;
-
-    public Image currentColor;
+    public FlexibleColorPicker colorPicker;
 
     void ChangePlayerInfo()
     {
@@ -177,19 +173,16 @@ public class GamePlayManager : MonoBehaviour
         colorPickerPanel.SetActive(true);
     }
 
-    public void OnColorChanged()
-    {
-        currentColor.color = new Color(redSlider.value, greenSlider.value, blueSlider.value);
-        playerColor[currentPlayerIndex].myColor = currentColor.color;
-        players[currentPlayerInfoIndex - 1].myColor = currentColor.color;
-        players[currentPlayerInfoIndex - 1].GetComponentInChildren<Image>().color = currentColor.color;
-    }
-
     public void OnColorSelected()
     {
-        selectedColor = new Color(redSlider.value, greenSlider.value, blueSlider.value);
+        selectedColor = colorPicker.newColor;
+        selectedColor = colorPicker.color;
 
         players[currentPlayerInfoIndex - 1].playerName = playerNameInputField.text;
+        players[currentPlayerInfoIndex - 1].GetComponentInChildren<TextMeshProUGUI>().text = playerNameInputField.text;
+
+        players[currentPlayerInfoIndex - 1].myColor = selectedColor;
+        players[currentPlayerInfoIndex - 1].GetComponentInChildren<Image>().color = selectedColor;
         playerColor[currentPlayerIndex].myColor = selectedColor;
 
         colorPickerPanel.SetActive(false);

@@ -86,7 +86,9 @@ MonoBehaviour:
   - myColor: {r: 0.15044188, g: 1, b: 0, a: 0}
   playerPrefab: {fileID: 8067434532505438874, guid: 93dca05360d261d4ca40a7d0d4206ea7, type: 3}
   playerContainer: {fileID: 0}
+  currentPlayerName: {fileID: 0}
   players: []
+  playersInSession: []
   _boxCapturedEvent:
     m_PersistentCalls:
       m_Calls:
@@ -103,6 +105,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  size: 0
+  playerNameInputField: {fileID: 0}
+  colorPickerPanel: {fileID: 0}
+  promptText: {fileID: 0}
+  colorPicker: {fileID: 0}
 --- !u!114 &6046626344044852419
 MonoBehaviour:
   m_ObjectHideFlags: 0
