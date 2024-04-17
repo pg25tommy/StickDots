@@ -6,7 +6,7 @@ using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Leaderboards;
 using UnityEngine;
-using UnityEngine.SocialPlatforms.Impl;
+using TMPro;
 
 public class LeaderboardManager : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class LeaderboardManager : MonoBehaviour
 
     public LeaderboardScoreView scoreViewPrefab;
     public Transform scoresContainer;
+    public TMP_InputField scoreEntered;
 
     async void Awake()
     {
@@ -55,17 +56,23 @@ public class LeaderboardManager : MonoBehaviour
 
     public async void AddScore()
     {
-        var scoreResponse = await LeaderboardsService.Instance.AddPlayerScoreAsync(LeaderboardId, 102);
+        //string score = scoreEntered.text;
+        int scoreInt = 0;
+        Int32.TryParse(scoreEntered.text, out scoreInt);
+        var scoreResponse = await LeaderboardsService.Instance.AddPlayerScoreAsync(
+            LeaderboardId, scoreInt);
         Debug.Log(JsonConvert.SerializeObject(scoreResponse));
     }
 
     public async void AddScoreWithMetadata()
     {
+        int scoreInt = 0;
+        Int32.TryParse(scoreEntered.text, out scoreInt);
         var metadata = new Dictionary<string, string>() { { "team", "red" } };
         var playerEntry = await LeaderboardsService.Instance
             .AddPlayerScoreAsync(
                 LeaderboardId,
-                102,
+                scoreInt,
                 new AddPlayerScoreOptions { Metadata = metadata });
         Debug.Log(JsonConvert.SerializeObject(playerEntry));
     }

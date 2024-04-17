@@ -343,19 +343,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 134660287}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 356564486}
-        m_TargetAssemblyTypeName: LeaderboardManager, Assembly-CSharp
-        m_MethodName: LoadScoresAsync
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &134660287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -846,6 +834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreViewPrefab: {fileID: -3234990845370328536, guid: c26a554b14fb01e4db6b5ea1ace184b9, type: 3}
   scoresContainer: {fileID: 126054024}
+  scoreEntered: {fileID: 988923222}
 --- !u!1 &359787583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1532,6 +1521,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1813552923811076342, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1813552923811076342, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1813552923811076342, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 356564486}
+    - target: {fileID: 1813552923811076342, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1813552923811076342, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AddScore
+      objectReference: {fileID: 0}
+    - target: {fileID: 1813552923811076342, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LeaderboardManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1813552923811076342, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3541807859041290316, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1612,13 +1629,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6385397610071993286, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
-      propertyPath: m_SortingOrder
-      value: -2
+    - target: {fileID: 4107003846161537205, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 356564486}
+    - target: {fileID: 4107003846161537205, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadScoresAsync
       objectReference: {fileID: 0}
-    - target: {fileID: 6385397610071993286, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
+    - target: {fileID: 4107003846161537205, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LeaderboardManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4107003846161537205, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6770412400887697278, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
       propertyPath: m_Name
@@ -1630,18 +1655,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7084224733199720606, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 32
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8942560447761132662, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
-      propertyPath: m_ChildControlWidth
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8942560447761132662, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
-      propertyPath: m_ChildControlHeight
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6553193173660689059, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2133,6 +2149,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 942743864}
   m_CullTransparentMesh: 1
+--- !u!114 &988923222 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7714887087553432918, guid: acaf079044fe34e1ebf20c6c4a3a68bd, type: 3}
+  m_PrefabInstance: {fileID: 490520527}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da0c512f12947e489f739169773d7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1009944761
 GameObject:
   m_ObjectHideFlags: 0
@@ -2327,7 +2354,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Submit \nScore"
+  m_text: Placeholder
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2752,19 +2779,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1143693070}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 356564486}
-        m_TargetAssemblyTypeName: LeaderboardManager, Assembly-CSharp
-        m_MethodName: AddScoreWithMetadata
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1143693070
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3986,9 +4001,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Get
-
-    Score'
+  m_text: Placeholder
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
