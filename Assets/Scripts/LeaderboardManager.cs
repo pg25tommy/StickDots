@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -17,6 +18,9 @@ public class LeaderboardManager : MonoBehaviour
     int Limit { get; set; }
     int RangeLimit { get; set; }
     List<string> FriendIds { get; set; }
+
+    public LeaderboardScoreView scoreViewPrefab;
+    public Transform scoresContainer;
 
     async void Awake()
     {
@@ -71,6 +75,33 @@ public class LeaderboardManager : MonoBehaviour
         var scoresResponse =
             await LeaderboardsService.Instance.GetScoresAsync(LeaderboardId);
         Debug.Log(JsonConvert.SerializeObject(scoresResponse));
+    }
+
+    public async void LoadScoresAsync()
+    {
+        try
+        {
+            var scoresResponse = await LeaderboardsService.Instance.GetScoresAsync(LeaderboardId);
+            var childCount = scoresContainer.childCount;
+            for (int i = 0; i < childCount; i++)
+            {
+                Destroy(scoresContainer.GetChild(i).gameObject);
+            }
+
+            foreach (var leaderboardEntry in scoresResponse.Results)
+            {
+                var scoreView = Instantiate(scoreViewPrefab, scoresContainer);
+                scoreView.Initialize(leaderboardEntry.Rank.ToString(), leaderboardEntry.PlayerName,
+                    leaderboardEntry.Score.ToString());
+            }
+
+            //messageText.text = "Scores fetched!";
+        }
+        catch (Exception e)
+        {
+            //messageText.text = $"Failed to fetch scores: {e}";
+            throw;
+        }
     }
 
     public async void GetPaginatedScores()
