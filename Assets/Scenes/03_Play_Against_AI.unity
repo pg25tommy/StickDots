@@ -486,11 +486,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2267865735064433497, guid: 28148e2793f43f545af05c052c050c85, type: 3}
       propertyPath: _h
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2267865735064433497, guid: 28148e2793f43f545af05c052c050c85, type: 3}
       propertyPath: _w
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5604965045356236957, guid: 28148e2793f43f545af05c052c050c85, type: 3}
       propertyPath: m_LocalPosition.x
