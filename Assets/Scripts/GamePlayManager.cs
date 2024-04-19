@@ -15,6 +15,8 @@ public class GamePlayManager : MonoBehaviour
     [SerializeField] public PlayerColor[] playerColor;
     [SerializeField] GameObject playerPrefab;
     [SerializeField] private GameObject playerContainer;
+    //TODO: WHEN INTEGRATING COLOR PICKER
+    //[SerializeField] private TextMeshProUGUI currentPlayerName;
     public Player[] players;
     public int currentPlayerIndex { get; private set; } = 0;
     public static GamePlayManager Instance { get; private set; }
@@ -99,6 +101,8 @@ public class GamePlayManager : MonoBehaviour
         //     _w = 8;
         // }
         InitailizePlayers();
+        //TODO: WHEN INTEGRATING COLOR PICKER
+        //ChangePlayerInfo();
         StartTurn();
         _board = new Board(_h, _w);
         GridGenerator.Instance.CreateBoard();
@@ -132,6 +136,8 @@ public class GamePlayManager : MonoBehaviour
     {
         players[currentPlayerIndex].BeginTurn();
         Timer.Instance.StartTimer();
+        //TODO: WHEN INTEGRATING COLOR PICKER
+        //currentPlayerName.text = players[currentPlayerIndex].playerName.ToString();
     }
 
     public void EndTurn()

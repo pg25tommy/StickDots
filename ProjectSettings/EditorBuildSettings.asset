@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/03_Play_Against_AI.unity
     guid: 1601345b395f4204f9e1d818905810fb
   - enabled: 1
+    path: Assets/Scenes/04_Local_Multiplayer.unity
+    guid: 841ad3bb73ac74a4397a1f60eddfce3a
+  - enabled: 0
     path: Assets/Scenes/04(2)_Local_Multiplayer_ColorPicker_Broken.unity
     guid: 5a5ad70b8ad97ab478e3c5eeb01de415
   m_configObjects: {}
