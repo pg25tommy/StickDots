@@ -21,11 +21,6 @@ public class Timer : MonoBehaviour
             Destroy(gameObject);
     }
 
-    //private void Start()
-    //{
-    //    StartTimer();
-    //}
-
     private void Update()
     {
         if (isRunning)
@@ -39,7 +34,7 @@ public class Timer : MonoBehaviour
             }
             else
             {
-                if (timeRemaining <= 15 && timeRemaining > 5)
+                if (timeRemaining <= 10 && timeRemaining > 5)
                 {
                     if (beepSound != null)
                         AudioSource.PlayClipAtPoint(beepSound, transform.position);
@@ -49,6 +44,15 @@ public class Timer : MonoBehaviour
                     if (beepSound != null)
                         AudioSource.PlayClipAtPoint(beepSound, transform.position);
                 }
+            }
+
+            if (timeRemaining <= 3)
+            {
+                timerText.color = Color.red;
+            }
+            else
+            {
+                timerText.color = Color.white;
             }
         }
     }

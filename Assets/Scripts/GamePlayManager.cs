@@ -23,7 +23,9 @@ public class GamePlayManager : MonoBehaviour
     private int playerCount;
     private Board _board;
     [SerializeField] private UnityEvent<Vector3> _boxCapturedEvent;
-    
+
+    [SerializeField] private AudioClip gameOverAudioClip;
+    private AudioSource audioSource;
 
     public int PlayersCount => playerCount;
     public int H => _h;
@@ -41,6 +43,11 @@ public class GamePlayManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -54,14 +61,6 @@ public class GamePlayManager : MonoBehaviour
             CreateBoardOfSize();
     }
 
-
-    void Start()
-    {
-        
-        
-        
-    }
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -71,6 +70,13 @@ public class GamePlayManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             EndTurn();
+        }
+
+        if (_board != null && _board.AvailableLines.Count == 0)
+        {
+            Debug.Log("Game Over");
+
+            PlayGameOverAudio();
         }
     }
 
@@ -121,7 +127,7 @@ public class GamePlayManager : MonoBehaviour
             {
                 GameObject playerObject = Instantiate(playerPrefab);
                 playerObject.transform.parent = playerContainer.transform;
-                playerObject.name = $"player {i +1}";
+                playerObject.name = $"player {i + 1}";
                 playerObject.GetComponentInChildren<TextMeshProUGUI>().text = playerObject.name;
                 players[i] = playerObject.AddComponent<Player>();
                 players[i].GetComponent<Player>().playerIndex = i;
@@ -148,10 +154,11 @@ public class GamePlayManager : MonoBehaviour
 
         NextTurn();
     }
+
     public void NextTurn()
     {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerCount;
-        
+
         playerContainer.GetComponent<PlayerContainer>().rotateAvator();
         StartTurn();
     }
@@ -184,5 +191,13 @@ public class GamePlayManager : MonoBehaviour
     public void CaptureBox(Vector3 boxCoordAndCapturedBy)
     {
         _boxCapturedEvent.Invoke(boxCoordAndCapturedBy);
+    }
+
+    private void PlayGameOverAudio()
+    {
+        if (gameOverAudioClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(gameOverAudioClip);
+        }
     }
 }

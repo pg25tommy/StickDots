@@ -16,7 +16,7 @@ public class BoxComplete : MonoBehaviour
 
     private Material activeColor;
     [SerializeField] private Shader completionShader;
-
+    [SerializeField] private AudioClip audioClip;
 
     private int col;
     private int winPlayer;
@@ -60,6 +60,11 @@ public class BoxComplete : MonoBehaviour
             GamePlayManager.Instance.players[winPlayer].myColor);
         ren.material = activeColor;
         blingMode = true;
+
+        if (audioClip != null)
+        {
+            AudioSource.PlayClipAtPoint(audioClip, transform.position);
+        }
     }
 
     private void ResetBling()
@@ -78,5 +83,4 @@ public class BoxComplete : MonoBehaviour
 
         
     }
-
 }
