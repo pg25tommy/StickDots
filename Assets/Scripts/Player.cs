@@ -5,8 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private bool isTurnActive = false;
-    public Color myColor { get; set; }
+    public Color myColor = new Color(255, 0, 0);
     public int playerIndex { get; set; }
+
+    public string playerName = "Player";
 
     public void BeginTurn()
     {

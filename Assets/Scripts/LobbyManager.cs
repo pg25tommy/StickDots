@@ -11,6 +11,8 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private GameObject joinRoomPage;
     [SerializeField] private UnityEvent<Vector2> gameStart;
 
+    public List<Player> playersInLobby = new List<Player>(); // Pass this list data to GameplayManager Players List
+
     private string roomType;
     private void Awake()
     {
@@ -40,5 +42,11 @@ public class LobbyManager : MonoBehaviour
         //return;
 
         gameStart.Invoke(new Vector2(x, y));
+    }
+
+    public void AddPlayer()
+    {
+        Player newPlayer = new Player();
+        playersInLobby.Add(newPlayer);
     }
 }
