@@ -21,7 +21,7 @@ public class GamePlayManager : MonoBehaviour
     private int playerCount;
     private Board _board;
     [SerializeField] private UnityEvent<Vector3> _boxCapturedEvent;
-    public int size;
+    
 
     public int PlayersCount => playerCount;
     public int H => _h;
@@ -72,30 +72,32 @@ public class GamePlayManager : MonoBehaviour
         }
     }
 
-    public void SetBoardSize(int value)
+    public void SetBoardSize(Vector2 value)
     {
-        size = value;
+        
+        _h = (int)value.x;
+        _w = (int)value.y;
     }
     
     public void CreateBoardOfSize()
     {
         Transform a = FindFirstObjectByType<UIManager>().transform;
         playerContainer = a.GetChild(2).gameObject;
-        if (size == 1)
-        {
-            _h = 4; 
-            _w = 4;
-        }
-        else if (size == 2)
-        {
-            _h = 6;
-            _w = 6;
-        }
-        else if (size == 3)
-        {
-            _h = 8;
-            _w = 8;
-        }
+        // if (H == 1)
+        // {
+        //     _h = 4; 
+        //     _w = 4;
+        // }
+        // else if (size == 2)
+        // {
+        //     _h = 6;
+        //     _w = 6;
+        // }
+        // else if (size == 3)
+        // {
+        //     _h = 8;
+        //     _w = 8;
+        // }
         InitailizePlayers();
         StartTurn();
         _board = new Board(_h, _w);
