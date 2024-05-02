@@ -59,3 +59,7 @@ PG25 Sebastian
 PG25 Tommy
 PG25 Eduardo
 PG25 Waytt
+
+
+#### Figma
+LInk to the figma file: https://www.figma.com/file/5BnQwmUGuFslWMUXtnEFzi/UI_StickyDots_P2?type=design&node-id=0-1&mode=design&t=rxF1BKk4tvJ7O5UA-0
