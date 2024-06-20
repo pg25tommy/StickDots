@@ -1,19 +1,53 @@
+## The Team
+<table align="center">
+  <tr>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Kawai" title="PG25 Kawai" width="50"><br>PG25 Kawai
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Tiago" title="PG25 Tiago" width="50"><br>PG25 Tiago
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Yewon" title="PG25 Yewon" width="50"><br>PG25 Yewon
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Michale" title="PG25 Michale" width="50"><br>PG25 Michale
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Alex" title="PG25 Alex" width="50"><br>PG25 Alex
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Xian" title="PG25 Xian" width="50"><br>PG25 Xian
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Sebastian" title="PG25 Sebastian" width="50"><br>PG25 Sebastian
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Tommy" title="PG25 Tommy" width="50"><br>PG25 Tommy
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Eduardo" title="PG25 Eduardo" width="50"><br>PG25 Eduardo
+    </td>
+    <td style="text-align: center;">
+      <img src="https://github.com/pg25tommy/StickDots/blob/main/AvatarIcon.png" alt="Waytt" title="PG25 Waytt" width="50"><br>PG25 Waytt
+    </td>
+  </tr>
+</table>
+
+## My Role 
+My primary role on our team was Project Manager on Stick Dots project, although I also served as a programmer. My responsibilities included:
+
+- **Team Coordination**: Managed and coordinated a diverse team of contributors, ensuring effective communication and collaboration among all members.
+- **Task Management**: Utilized a  ticketing and point system to assign and track tasks, ensuring that all tasks were appropriately prioritized and completed on schedule.
+- **Code Review**: Conducted thorough code reviews with our tech leads to maintain high coding standards and ensure the quality and integrity of the project’s codebase.
+- **Project Architecture**: Oversaw the project architecture, making key decisions to ensure the project was scalable, maintainable, and aligned with our goals.
+- **Quality Assurance**: Ensured that all project deliverables met the high standards expected by the VFS PG25 class, conducting regular checks and facilitating necessary adjustments.
+- **Programmer**: I was also programming on this project and served to help get the project properly networked.
+
+---------------------------------------
 # Stick Dots
-
-![PG25 VFS](https://github.com/AmirJahan/StickDots/assets/144267739/b79e403e-481b-4c33-afb2-d378986c6d0c)
-
-## Contributor Avatars
 <p align="center">
-  <img src="https://via.placeholder.com/50" alt="Kawai" title="PG25 Kawai">
-  <img src="https://via.placeholder.com/50" alt="Tiago" title="PG25 Tiago">
-  <img src="https://via.placeholder.com/50" alt="Yewon" title="PG25 Yewon">
-  <img src="https://via.placeholder.com/50" alt="Michale" title="PG25 Michale">
-  <img src="https://via.placeholder.com/50" alt="Alex" title="PG25 Alex">
-  <img src="https://via.placeholder.com/50" alt="Xian" title="PG25 Xian">
-  <img src="https://via.placeholder.com/50" alt="Sebastian" title="PG25 Sebastian">
-  <img src="https://via.placeholder.com/50" alt="Tommy" title="PG25 Tommy">
-  <img src="https://via.placeholder.com/50" alt="Eduardo" title="PG25 Eduardo">
-  <img src="https://via.placeholder.com/50" alt="Waytt" title="PG25 Waytt">
+  <img src="https://github.com/AmirJahan/StickDots/assets/144267739/b79e403e-481b-4c33-afb2-d378986c6d0c" width="350" title="Stick Dots">
 </p>
 
 ---------------------------------------
