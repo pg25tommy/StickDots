@@ -44,14 +44,12 @@ My primary role on our team was Project Manager on Stick Dots project, although 
 - **Quality Assurance**: Ensured that all project deliverables met the high standards expected by the VFS PG25 class, conducting regular checks and facilitating necessary adjustments.
 - **Programmer**: I was also programming on this project and served to help get the project properly networked.
 
----------------------------------------
 # Stick Dots
 <p align="center">
   <img src="https://github.com/pg25tommy/StickDots/blob/main/Images/StickDotMenu.png" alt="Stick Dot Menu" width="250">
   <img src="https://github.com/pg25tommy/StickDots/blob/main/Images/StickdotLobby.png" alt="Stick Dot Lobby" width="250">
   <img src="https://github.com/pg25tommy/StickDots/blob/main/Images/StickDotGame.png" alt="Stick Dot Game" width="250">
 </p>
----------------------------------------
 
 ## Project Information
 **Stick Dots**  
