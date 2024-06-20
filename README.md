@@ -37,7 +37,7 @@
 ## My Role 
 My primary role on our team was Project Manager on Stick Dots project, although I also served as a programmer. My responsibilities included:
 
-- **Team Coordination**: Managed and coordinated a diverse team of contributors, ensuring effective communication and collaboration among all members.
+- **Team Coordination**: Managed and coordinated a diverse team of contributors in both backgrounds and skill sets, ensuring effective communication and collaboration among all members.
 - **Task Management**: Utilized a  ticketing and point system to assign and track tasks, ensuring that all tasks were appropriately prioritized and completed on schedule.
 - **Code Review**: Conducted thorough code reviews with our tech leads to maintain high coding standards and ensure the quality and integrity of the project’s codebase.
 - **Project Architecture**: Oversaw the project architecture, making key decisions to ensure the project was scalable, maintainable, and aligned with our goals.
@@ -47,17 +47,18 @@ My primary role on our team was Project Manager on Stick Dots project, although 
 ---------------------------------------
 # Stick Dots
 <p align="center">
-  <img src="https://github.com/AmirJahan/StickDots/assets/144267739/b79e403e-481b-4c33-afb2-d378986c6d0c" width="350" title="Stick Dots">
+  <img src="https://github.com/pg25tommy/StickDots/blob/main/Images/StickDotMenu.png" alt="Stick Dot Menu" width="250">
+  <img src="https://github.com/pg25tommy/StickDots/blob/main/Images/StickdotLobby.png" alt="Stick Dot Lobby" width="250">
+  <img src="https://github.com/pg25tommy/StickDots/blob/main/Images/StickDotGame.png" alt="Stick Dot Game" width="250">
 </p>
-
 ---------------------------------------
 
 ## Project Information
 **Stick Dots**  
 Copyright (C) VFS Class PG25, all rights reserved.
 
-### Version: 3.0  
-Last updated: 28/03/24
+### Version: 3.15.9 
+Last updated: 19/06/24
 
 ## Motivation
 An exercise for VFS PG25 class to learn how to build a functional ship-ready mobile application, learning how to work collaboratively as a team to meet these goals.
