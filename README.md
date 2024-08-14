@@ -43,7 +43,9 @@ My primary role on our team was Project Manager on Stick Dots project, although 
 - **Project Architecture**: Oversaw the project architecture, making key decisions to ensure the project was scalable, maintainable, and aligned with our goals.
 - **Quality Assurance**: Ensured that all project deliverables met the high standards expected by the VFS PG25 class, conducting regular checks and facilitating necessary adjustments.
 - **Programmer**: I was also programming on this project and served to help get the project properly networked.
-
+<p align="center">
+<img src="https://github.com/pg25tommy/StickDots/blob/main/Images/StickDotsTracker.png">
+</p>
 # Stick Dots
 <p align="center">
   <img src="https://github.com/pg25tommy/StickDots/blob/main/Images/StickDotMenu.png" alt="Stick Dot Menu" width="250">
